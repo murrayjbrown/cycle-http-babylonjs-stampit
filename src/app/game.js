@@ -1,8 +1,13 @@
 // BABYLON is an externally loaded dependency (global)
+/** @module model */
 
-//
-// game() returns game$ stream
-//
+/**
+ * Produce Cycle.js game effects from model states
+ * @function game
+ * @param {Observable} game$ - game stream
+ * @param {object} states - state streams
+ * @return {Observable} game$ - game stream
+ */
 export default function game(game$, states) {
 
   // change background colour

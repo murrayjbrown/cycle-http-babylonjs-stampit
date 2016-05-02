@@ -1,9 +1,13 @@
-// Globals (externally loaded dependencies)
-// BABYLON
+// BABYLON is an externally loaded dependency (global)
 
-//
-// createScene() returns a Babylon scene object
-//
+/** @module createScene */
+
+/**
+ * Create a Bablyon scene
+ * @function createScene
+ * @param {object} engine - game engine
+ * @return {object} scene - scene object
+ */
 export function createScene(engine) {
   // get rendering canvas
   const canvas = engine.getRenderingCanvas();

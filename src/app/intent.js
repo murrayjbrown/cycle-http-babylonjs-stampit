@@ -1,10 +1,14 @@
 // jQuery is an externally loaded dependency (global)
 
+/** @module intent */
 import {Observable} from 'rx';
 
-//
-// intent() returns a DOM action object containing action streams
-//
+/**
+ * Produce Cycle.js actions from DOM intents
+ * @function intent
+ * @param {object} dom - DOM input effects
+ * @return {object} actions - action streams
+ */
 export default function intent(dom) {
   //
   // Game actions

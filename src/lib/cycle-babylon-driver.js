@@ -1,12 +1,14 @@
-// Globals (externally loaded dependencies)
-// jQuery
-// BABYLON
+// jQuery & BABYLON are externally loaded dependencies (globals)
 
+/** @module cycle-babylon-driver */
 import { Observable } from 'rx';
 
-//
-// Babylon driver
-//
+/**
+ * Make Babylon game engine effects driver for Cycle.js
+ * @param {string} mountPoint - DOM selector for canvas element
+ * @param {function} createScene - scene definition
+ * @return {function} - game engine effects driver
+ */
 export function makeGameDriver(mountPoint, createScene) {
   const canvas = jQuery(mountPoint).get(0);
   const engine = new BABYLON.Engine(canvas, true);
@@ -15,8 +17,6 @@ export function makeGameDriver(mountPoint, createScene) {
     function renderScene() {
       return scene.render();
     }
-    // const timeout = 5000; // milliseconds
-    // setTimeout(engine.stopRenderLoop(renderScene), timeout);
     engine.runRenderLoop(renderScene);
     return Observable.just({
       scene: scene

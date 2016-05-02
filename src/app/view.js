@@ -1,8 +1,12 @@
+/** @module model */
 import {a, button, div, hr, h1, h4, input, label, p, span} from "@cycle/dom";
 
-//
-// view() returns stream of virtual dom tree (vtree$) effects
-//
+/**
+ * Produce Cycle.js virtual DOM tree states from model states
+ * @function view
+ * @param {object} states - model state streams
+ * @return {Observable} vtree$ - Virtual DOM tree stream
+ */
 export default function view(states) {
 
   // construct virtual DOM tree

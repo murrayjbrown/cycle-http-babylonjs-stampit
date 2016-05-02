@@ -1,8 +1,12 @@
+/** @module model */
 import {Observable} from 'rx';
 
-//
-// model() returns an state object containing state streams
-//
+/**
+ * Produce Cycle.js model states from events
+ * @function model
+ * @param {object} events - event streams
+ * @return {object} states - state streams
+ */
 export default function model(events) {
   //
   // Game model
