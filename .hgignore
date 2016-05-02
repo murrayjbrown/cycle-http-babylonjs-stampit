@@ -1,4 +1,4 @@
-.hg
+.git
 /build/*
 /dist/*
 /nbproject/
