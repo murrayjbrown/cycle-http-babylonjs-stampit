@@ -1,5 +1,5 @@
-/** @module model */
-import {a, button, div, hr, h1, h4, input, label, p, span} from "@cycle/dom";
+/** @module view */
+import {a, button, div, hr, h2, h4, input, label, p, span} from "@cycle/dom";
 
 /**
  * Produce Cycle.js virtual DOM tree states from model states
@@ -9,27 +9,49 @@ import {a, button, div, hr, h1, h4, input, label, p, span} from "@cycle/dom";
  */
 export default function view(states) {
 
-  // construct virtual DOM tree
-  const vtree$ = states.user$
-    .map((user) => div([
+  function queryForm(query) {
+    const qid = (query && query.qid) ? query.qid : '';
+    return [
       label('User: '),
-      input('.user-id', {style: 'text',
-        value: user === null ? '' : user.id
-      }),
-      button('.get-user-info', 'Get user info'),
-      // button('.colour-it', 'Colourize!'),
-      hr(),
-      p([
-        span('.query-slug', 'Query: '),
-        user === null ? null : span('.query-url', user.query)
-      ]),
-      hr(),
-      user === null ? null : div('.user-details', [
-        h1('.user-name', user.name),
-        h4('.user-email', user.email),
-        a('.user-website', {href: user.site}, user.site)
-      ])
-    ]));
+      input('.input-user-id', {style: 'text', value: qid }),
+      button('.button-get-user-info', 'Get user info'),
+      hr()
+    ];
+  }
+
+  function queryResult(info) {
+    return div(".result", [
+      info && info.query ?
+        div(".query", [
+          span('.query .slug', 'Query: '),
+          info.query ? span('.query .url', info.query) : '',
+          hr()
+        ])
+        : "",
+      info && info.error ?
+        div(".error", [
+          p(info.error)
+        ])
+        : "",
+      info && info.id ?
+        div(".details", [
+          div(".user-details", [
+            h2('.user-name', String(info.id) + ": " + info.name),
+            h4('.user-email', info.email),
+            a('.user-website', {href: info.site}, info.site)
+          ])
+        ])
+        : ""
+    ]);
+  }
+
+  // construct virtual DOM tree
+  const vtree$ = states.userInfo$.map((user) => {
+    return div([
+      queryForm(user),
+      queryResult(user)
+    ]);
+  });
 
   // return virtual DOM tree
   return vtree$;

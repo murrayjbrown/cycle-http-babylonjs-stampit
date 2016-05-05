@@ -1,5 +1,5 @@
-// BABYLON is an externally loaded dependency (global)
-/** @module model */
+/** @module game */
+const BJS = BABYLON;  // external dependency (global)
 
 /**
  * Produce Cycle.js game effects from model states
@@ -18,14 +18,20 @@ export default function game(game$, states) {
         colour: _colour
       };
     })
-    .subscribe( (state) => {
-      // console.log('game scene colour mapping…');
-      const scene = state.scene;
-      const red = Math.random();
-      const green = Math.random();
-      const blue = Math.random();
-      scene.clearColor = new BABYLON.Color4(red, green, blue);
-    });
+    .subscribe(
+      (state) => {
+        // console.log('game scene colour mapping…');
+        const scene = state.scene;
+        const red = Math.random();
+        const green = Math.random();
+        const blue = Math.random();
+        scene.clearColor = new BJS.Color4(red, green, blue);
+      },
+      (err) => {
+        console.log("game: caught error: %s", err);
+      },
+      () => {}
+  );
 
   // resize game
   game$.combineLatest(states.resize$,

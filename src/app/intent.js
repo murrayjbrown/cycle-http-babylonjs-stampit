@@ -1,7 +1,6 @@
-// jQuery is an externally loaded dependency (global)
-
 /** @module intent */
 import {Observable} from 'rx';
+// var $ = jQuery;   // external dependency (global)
 
 /**
  * Produce Cycle.js actions from DOM intents
@@ -13,19 +12,24 @@ export default function intent(dom) {
   //
   // Game actions
   //
-  const elemGameHeader = jQuery("#gameHeader");
+  const elemGameHeader = $("#gameHeader");
   const clickColourGame$ = Observable.fromEvent(elemGameHeader, 'click');
   const eventResizeGame$ = dom.events('resize');
 
   //
   // Application form actions
   //
-  const debounceTime = 10;  // milliseconds
-  const inputUserId$ = dom.select('.user-id')
+  const debounceTime = 100;  // milliseconds
+  const inputUserId$ = dom.select('.input-user-id')
     .events('input')
     .debounce(debounceTime)
-    .map(ev => ev.target.value);
-  const clickGetUserInfo$ = dom.select('.get-user-info')
+    .map(ev => ev.target.value)
+    .distinctUntilChanged()
+    .tap((value) => {
+      console.log("intent: inputUserID: %s", value);
+    });
+
+  const clickGetUserInfo$ = dom.select('.button-get-user-info')
     .events('click');
 
   // return action stream(s)

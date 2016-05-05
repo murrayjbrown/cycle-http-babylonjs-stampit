@@ -25,6 +25,9 @@ module.exports = {
   },
   externals: [
     "app",
+    "_",
+    "lodash",
+    "$",
     "JQuery",
     "BABYLON"
   ],

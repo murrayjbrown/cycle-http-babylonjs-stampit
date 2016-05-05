@@ -1,10 +1,10 @@
 /** @module main */
-import game from "./game.js";
-import intent from "./intent.js";
-import model from "./model.js";
-import receive from "./receive.js";
-import send from "./send.js";
-import view from "./view.js";
+import game from "game.js";
+import intent from "intent.js";
+import model from "model.js";
+import receive from "receive.js";
+import send from "send.js";
+import view from "view.js";
 
 /**
  * Main function of Cycle.js app

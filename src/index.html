@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
   <meta name="description" content="Cycle.js Bablon game & query demo"/>
   <title>Cycle Babylon</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.11.2/lodash.min.js"></script>
   <script src="./vendor/jquery-2.2.3.js"></script>
   <script src="./vendor/babylon.js"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css" rel="stylesheet">
@@ -21,9 +22,6 @@
       width: 60%;
       margin: auto;
     }
-    #app * .query-url {
-      font-style: italic;
-    }
     #game {
       width: 30%;
       margin: auto;
@@ -38,6 +36,12 @@
       margin: auto;
       margin-top: 3em;
       text-align: center;
+    }
+    #app * .url {
+      font-style: italic;
+    }
+    #app * .error {
+      color: red;
     }
 
   </style>
