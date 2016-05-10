@@ -21,7 +21,8 @@ export default function game(states) {
   //
 
   // change background colour function
-  const backgroundColour$ = states.backgroundColour$.distinctUntilChanged()
+  const backgroundColour$ = states.backgroundColour$
+    .distinctUntilChanged()
     .map(() => {
       return function effect(scene) {
         const red = Math.random();
@@ -32,7 +33,8 @@ export default function game(states) {
     });
 
   // resize game function
-  const resize$ = states.resize$.distinctUntilChanged()
+  const resize$ = states.resize$
+    .distinctUntilChanged()
     .map(() => {
       return function effect(scene) {
         const engine = scene.getEngine();
@@ -40,9 +42,23 @@ export default function game(states) {
       };
     });
 
+  // set sphere radius
+  const sphereScale$ = states.sphereScale$
+    .distinctUntilChanged()
+    .map((scale) => {
+      return function effect(scene) {
+        const sphere = scene.getMeshByName('sphere1');
+        sphere.scaling.x = scale;
+        sphere.scaling.y = scale;
+        sphere.scaling.z = scale;
+      };
+    });
+
+
   // return effects$ stream
   return Observable.merge(
     backgroundColour$,
-    resize$
+    resize$,
+    sphereScale$
   );
 }

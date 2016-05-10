@@ -2,7 +2,6 @@
 // _ = lodash external dependency (global)
 import {Observable} from 'rx';
 
-
 /**
  * Produce Cycle.js model states from events
  * @function model
@@ -11,28 +10,11 @@ import {Observable} from 'rx';
  */
 export default function model(influx) {
   //
-  // Game model
+  // HTTP request/response model
   //
-  const gameBackgroundColour$ = influx.DOM.colourGame$
-    // .tap(() => {
-    //  console.log('model colour game!');
-    //  })
-    .startWith(null);
-  const gameResize$ = influx.DOM.resizeGame$
-    .startWith(null);
-
-  //
-  // Application form model
-  //
-  const queryId$ = influx.DOM.changeUserId$
-    .startWith('');
-  const queryResponse$ = influx.HTTP.queryUser$
-    .startWith({});
-
-  // HTTP state
   const URL = 'http://jsonplaceholder.typicode.com/users/';
-  const httpQueryRequest$ = influx.DOM.submitGetUserInfo$
-    .withLatestFrom(influx.DOM.changeUserId$
+  const httpQueryRequest$ = influx.DOM.appSubmitGetUserInfo$
+    .withLatestFrom(influx.DOM.appPropUserId$
         .where(qid => !isNaN(qid)),
       (submit, qid) => {
         let url = URL;
@@ -40,9 +22,17 @@ export default function model(influx) {
         console.log("model: query URL: %s", url);
         return url;
       });
+  const httpQueryResponse$ = influx.HTTP.queryUser$
+    .startWith({});
 
-  // Query result state
-  const domUserInfo$ = Observable.combineLatest(queryId$, queryResponse$,
+  //
+  // Application model
+  //
+
+  // User information
+  const appQueryUserId$ = influx.DOM.appPropUserId$
+    .startWith('');
+  const appUserInfo$ = Observable.combineLatest(appQueryUserId$, httpQueryResponse$,
     (qid, resp) => {
       const u = {qid: ''};
       if ( !isNaN(qid) ) {
@@ -67,16 +57,35 @@ export default function model(influx) {
         }
       }
       return u;
-    })
-    .startWith({});
+    });
+
+  // Game properties
+  const appGameSphereScale$ = influx.DOM.appPropGameSphereScale$
+    .startWith('1');
+
+  //
+  // Game interaction model
+  //
+  const gameSphereScale$ = influx.DOM.gameSubmitUpdateSphere$
+    .startWith(null)
+    .withLatestFrom(appGameSphereScale$
+      .where(scale => !isNaN(scale) && parseFloat(scale) > 0),
+    (submit, scale) => parseFloat(scale) );
+
+  const gameBackgroundColour$ = influx.DOM.gamePropBackgroundColour$
+    .startWith(null);
+  const gameResize$ = influx.DOM.gameEventResize$
+      .startWith(null);
 
   // return model states
   return {
     DOM: {
-      userInfo$: domUserInfo$
+      appGameSphereScale$: appGameSphereScale$,
+      appUserInfo$: appUserInfo$
     },
     GAME: {
       backgroundColour$: gameBackgroundColour$,
+      sphereScale$: gameSphereScale$,
       resize$: gameResize$
     },
     HTTP: {

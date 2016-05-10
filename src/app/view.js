@@ -1,4 +1,5 @@
 /** @module view */
+import {Observable} from 'rx';
 import {a, button, div, hr, h2, h4, input, label, p, span} from "@cycle/dom";
 
 /**
@@ -9,11 +10,21 @@ import {a, button, div, hr, h2, h4, input, label, p, span} from "@cycle/dom";
  */
 export default function view(states) {
 
+  function gameSphere(scale) {
+    const sphereScale = scale ? scale : '';
+    return [
+      label('Scale: '),
+      input('.input-sphere-scale', {style: 'text', value: sphereScale }),
+      button('.button-update-sphere', 'Update sphere'),
+      hr()
+    ];
+  }
+
   function queryForm(query) {
-    const qid = (query && query.qid) ? query.qid : '';
+    const queryUserid = (query && query.qid) ? query.qid : '';
     return [
       label('User: '),
-      input('.input-user-id', {style: 'text', value: qid }),
+      input('.input-user-id', {style: 'text', value: queryUserid }),
       button('.button-get-user-info', 'Get user info'),
       hr()
     ];
@@ -46,12 +57,17 @@ export default function view(states) {
   }
 
   // construct virtual DOM tree
-  const vtree$ = states.userInfo$.map((user) => {
-    return div([
-      queryForm(user),
-      queryResult(user)
-    ]);
-  });
+  const vtree$ = Observable.combineLatest(
+    states.appGameSphereScale$,
+    states.appUserInfo$,
+    (scale, user) => {
+      return div([
+        gameSphere(scale),
+        queryForm(user),
+        queryResult(user)
+      ]);
+    }
+  );
 
   // return virtual DOM tree
   return vtree$;

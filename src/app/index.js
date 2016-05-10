@@ -10,7 +10,7 @@ import main from "main.js";
 // Append static DOM structure
 $("#app").append(
   '<div class="game">' +
-    '<h1>Babylon game</h1>' +
+    '<h1>Cycle.js Babylon game demo app</h1>' +
     '<canvas></canvas>' +
   '</div>' +
   '<div class="vdom">' +
