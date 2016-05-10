@@ -1,53 +1,48 @@
 /** @module game */
-const BJS = BABYLON;  // external dependency (global)
+import {Observable} from 'rx';
+// BABYLON = Babylon external dependency (global)
 
 /**
- * Produce Cycle.js game effects from model states
+ * Map Babylon game model states onto Cycle.js driver effects functions
  * @function game
- * @param {Observable} game$ - game stream
- * @param {object} states - state streams
- * @return {Observable} game$ - game stream
+ * @param {object} states - game state property streams
+ * @return {Observable} - game effects functions stream
  */
-export default function game(game$, states) {
+export default function game(states) {
+  //
+  // The returned effects$ stream must be comprised of functions
+  // for producing each of the various game effects. The various
+  // effect streams are merged together and emitted as a single
+  // stream. Each effect function shall be called by the game
+  // driver with its scene parameter:
+  //    effect(scene)
+  // The game engine for the scene may be derived via:
+  //    scene.getEngine()
+  //
 
-  // change background colour
-  game$.combineLatest(states.colour$,
-    (_game, _colour) => {
-      return {
-        scene: _game.scene,
-        colour: _colour
-      };
-    })
-    .subscribe(
-      (state) => {
-        // console.log('game scene colour mapping…');
-        const scene = state.scene;
+  // change background colour function
+  const backgroundColour$ = states.backgroundColour$.distinctUntilChanged()
+    .map(() => {
+      return function effect(scene) {
         const red = Math.random();
         const green = Math.random();
         const blue = Math.random();
-        scene.clearColor = new BJS.Color4(red, green, blue);
-      },
-      (err) => {
-        console.log("game: caught error: %s", err);
-      },
-      () => {}
-  );
-
-  // resize game
-  game$.combineLatest(states.resize$,
-    (_game) => {
-      return {
-        scene: _game.scene,
-        resize: true
+        scene.clearColor = new BABYLON.Color4(red, green, blue);
       };
-    })
-    .subscribe((state) => {
-      console.log('game scene resize mapping…');
-      const scene = state.scene;
-      const engine = scene.getEngine();
-      engine.resize();
     });
 
-  // return game stream
-  return game$;
+  // resize game function
+  const resize$ = states.resize$.distinctUntilChanged()
+    .map(() => {
+      return function effect(scene) {
+        const engine = scene.getEngine();
+        engine.resize();
+      };
+    });
+
+  // return effects$ stream
+  return Observable.merge(
+    backgroundColour$,
+    resize$
+  );
 }

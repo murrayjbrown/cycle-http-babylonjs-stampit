@@ -1,6 +1,6 @@
 /** @module model */
 import {Observable} from 'rx';
-// var _ = lodash;  // external dependency (global)
+// _ = lodash external dependency (global)
 
 /**
  * Produce Cycle.js model states from events
@@ -12,12 +12,12 @@ export default function model(influx) {
   //
   // Game model
   //
-  const colourGame$ = influx.DOM.colourGame$
+  const gameBackgroundColour$ = influx.DOM.colourGame$
     // .tap(() => {
     //  console.log('model colour game!');
     //  })
     .startWith(null);
-  const resizeGame$ = influx.DOM.resizeGame$
+  const gameResize$ = influx.DOM.resizeGame$
     .startWith(null);
 
   //
@@ -30,7 +30,7 @@ export default function model(influx) {
 
   // HTTP state
   const URL = 'http://jsonplaceholder.typicode.com/users/';
-  const queryRequest$ = influx.DOM.submitGetUserInfo$
+  const httpQueryRequest$ = influx.DOM.submitGetUserInfo$
     .withLatestFrom(influx.DOM.changeUserId$
         .where(qid => !isNaN(qid)),
       (submit, qid) => {
@@ -41,7 +41,7 @@ export default function model(influx) {
       });
 
   // Query result state
-  const userInfo$ = Observable.combineLatest(queryId$, queryResponse$,
+  const domUserInfo$ = Observable.combineLatest(queryId$, queryResponse$,
     (qid, resp) => {
       const u = {qid: ''};
       if ( !isNaN(qid) ) {
@@ -72,14 +72,14 @@ export default function model(influx) {
   // return model states
   return {
     DOM: {
-      userInfo$: userInfo$
+      userInfo$: domUserInfo$
     },
     GAME: {
-      colour$: colourGame$,
-      resize$: resizeGame$
+      backgroundColour$: gameBackgroundColour$,
+      resize$: gameResize$
     },
     HTTP: {
-      user$: queryRequest$
+      user$: httpQueryRequest$
     }
   };
 }

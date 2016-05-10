@@ -1,6 +1,6 @@
 /** @module intent */
 import {Observable} from 'rx';
-// var $ = jQuery;   // external dependency (global)
+// $ = jQuery external dependency (global)
 
 /**
  * Produce Cycle.js actions from DOM intents

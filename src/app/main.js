@@ -19,7 +19,7 @@ export default function main(sources) {
   const request$ = send( states.HTTP );
   const vtree$ = view( states.DOM, sources.GAME );
 
-  const game$ = game( sources.GAME, states.GAME );
+  const game$ = game( states.GAME );
 
   // return sinks
   return {
