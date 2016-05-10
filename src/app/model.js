@@ -1,6 +1,7 @@
 /** @module model */
-import {Observable} from 'rx';
 // _ = lodash external dependency (global)
+import {Observable} from 'rx';
+
 
 /**
  * Produce Cycle.js model states from events

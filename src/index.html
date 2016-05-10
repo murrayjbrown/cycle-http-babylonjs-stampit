@@ -10,51 +10,12 @@
   <script src="./vendor/babylon.js"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css">
-  <style>
-    body {
-      font-family: 'open sans', sans-serif;
-      background-color: #eeeeee;
-    }
-    a {
-      color: black
-    }
-    #app {
-      width: 60%;
-      margin: auto;
-    }
-    #game {
-      width: 30%;
-      margin: auto;
-    }
-    #appContainer {
-      width: 100%;
-      margin: auto;
-      margin-top: 3em;
-    }
-    #gameContainer {
-      width: 100%;
-      margin: auto;
-      margin-top: 3em;
-      text-align: center;
-    }
-    #app * .url {
-      font-style: italic;
-    }
-    #app * .error {
-      color: red;
-    }
-
-  </style>
+  <link href="./app/style.css" rel="stylesheet" type="text/css">
+  <link href="./style.css" rel="stylesheet" type="text/css">
 </head>
 <body>
   <div id="content">
-    <div id="gameContainer">
-      <h1 id="gameHeader">Babylon game</h1>
-      <canvas id="game"></canvas>
-    </div>
-    <div id="appContainer">
-      <div id="app"></div>
-    </div>
+    <div id="app"></div>
     <script src="app/common.bundle.js" type="text/javascript"></script>
     <script src="app/app.bundle.js" type="text/javascript"></script>
   </div>

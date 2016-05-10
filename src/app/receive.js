@@ -1,6 +1,7 @@
 /** @module receive */
-import {Observable} from 'rx';
 // _ = lodash external dependency (global)
+import {Observable} from 'rx';
+
 
 /**
  * Receive Cycle.js HTTP responses

@@ -1,6 +1,7 @@
 /** @module intent */
-import {Observable} from 'rx';
 // $ = jQuery external dependency (global)
+import {Observable} from 'rx';
+
 
 /**
  * Produce Cycle.js actions from DOM intents
@@ -12,7 +13,7 @@ export default function intent(dom) {
   //
   // Game actions
   //
-  const elemGameHeader = $("#gameHeader");
+  const elemGameHeader = $("#app > .game > h1").get(0);
   const clickColourGame$ = Observable.fromEvent(elemGameHeader, 'click');
   const eventResizeGame$ = dom.events('resize');
 

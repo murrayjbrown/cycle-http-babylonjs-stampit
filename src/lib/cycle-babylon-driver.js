@@ -1,7 +1,7 @@
 /** @module cycle-babylon-driver */
-import { Observable } from 'rx';
 // $ = jQuery external dependency (global)
 // BABYLON = Babylon external dependency (global)
+import { Observable } from 'rx';
 
 /**
  * Make Babylon game engine effects driver for Cycle.js

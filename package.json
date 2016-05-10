@@ -41,9 +41,15 @@
     "build:app":
       "npm run compile:js && npm run build:assets && npm run build:vendor",
     "build:assets":
-      "cpy src/*.html build/ && ncp src/img build/img",
+      "npm run build:html && npm run build:css && npm run build:img",
     "build:common":
       "npm run compile:common",
+    "build:css":
+      "cpy src/*.css build/ && cpy src/app/*.css build/app/",
+    "build:html":
+      "cpy src/*.html build/",
+    "build:img":
+      "ncp src/img build/img",
     "build:json":
       "cpy src/app/*.json build/app/",
     "build:lib":
