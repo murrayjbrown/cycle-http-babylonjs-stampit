@@ -102,9 +102,9 @@
     "dist":
       "npm run dist:app && npm run dist:assets && npm run dist:vendor",
     "dist:app":
-      "cpy build/app/*.bundle.js dist/app/ && npm cpy build/*.html dist/",
+      "cpy build/app/*.bundle.js dist/app/ && cpy build/*.html dist/",
     "dist:assets":
-      "npm run dist:html && npm run dist:img",
+      "npm run dist:css && npm run dist:img",
     "dist:css":
       "cpy build/*.css dist/ && cpy build/app/*.css dist/app/",
     "dist:img":
@@ -112,7 +112,7 @@
     "dist:json":
       "cpy build/app/*.json dist/app/",
     "dist:vendor":
-      "npm ncp vendor dist/vendor",
+      "ncp vendor dist/vendor",
     "install":
       "npm run build && npm run deploy",
     "env":
