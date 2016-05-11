@@ -4,7 +4,8 @@
     "jquery": "latest",
     "rx": "latest",
     "@cycle/core": "latest",
-    "@cycle/dom": "latest"
+    "@cycle/dom": "latest",
+    "@cycle/isolate": "latest"
   },
   "devDependencies": {
     "babel-cli": "latest",
@@ -99,11 +100,15 @@
     "deploy:vendor":
       "ncp vendor public/vendor",
     "dist":
-      "npm run clean:dist && npm run dist:app && npm run dist:vendor",
+      "npm run dist:app && npm run dist:assets && npm run dist:vendor",
     "dist:app":
-      "cpy build/app/*.bundle.js dist/app/ && npm run dist:asses",
+      "cpy build/app/*.bundle.js dist/app/ && npm cpy build/*.html dist/",
     "dist:assets":
-      "cpy build/*.html dist/ && ncp build/img/ dist/img/",
+      "npm run dist:html && npm run dist:img",
+    "dist:css":
+      "cpy build/*.css dist/ && cpy build/app/*.css dist/app/",
+    "dist:img":
+      "ncp build/img/ dist/img/",
     "dist:json":
       "cpy build/app/*.json dist/app/",
     "dist:vendor":

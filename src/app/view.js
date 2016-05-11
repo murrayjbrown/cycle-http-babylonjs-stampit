@@ -6,19 +6,10 @@ import {a, button, div, hr, h2, h4, input, label, p, span} from "@cycle/dom";
  * Produce Cycle.js virtual DOM tree states from model states
  * @function view
  * @param {object} states - model state streams
- * @return {Observable} vtree$ - Virtual DOM tree stream
+ * @param {object} components - component Virtual DOM tree streams
+ * @return {Observable} vtree$ - application Virtual DOM tree stream
  */
-export default function view(states) {
-
-  function gameSphere(scale) {
-    const sphereScale = scale ? scale : '';
-    return [
-      label('Scale: '),
-      input('.input-sphere-scale', {style: 'text', value: sphereScale }),
-      button('.button-update-sphere', 'Update sphere'),
-      hr()
-    ];
-  }
+export default function view(states, components) {
 
   function queryForm(query) {
     const queryUserid = (query && query.qid) ? query.qid : '';
@@ -58,16 +49,15 @@ export default function view(states) {
 
   // construct virtual DOM tree
   const vtree$ = Observable.combineLatest(
-    states.appGameSphereScale$,
-    states.appUserInfo$,
-    (scale, user) => {
+    components.sphereSlider$,
+    states.userInfo$,
+    (sphereSlider, user) => {
       return div([
-        gameSphere(scale),
+        sphereSlider,
         queryForm(user),
         queryResult(user)
       ]);
-    }
-  );
+    });
 
   // return virtual DOM tree
   return vtree$;

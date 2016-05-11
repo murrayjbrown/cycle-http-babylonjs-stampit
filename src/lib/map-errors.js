@@ -1,10 +1,12 @@
+/**
+** Source: https://github.com/killercup/cycle-webpack-starter/blob/master/app/helpers/map-errors.js
+** Author: Pascal Hertleif
+** Derivation: Murray J Brown
+** License: MIT 2016
+**/
+
 /** @module map-errors */
 import {Rx} from '@cycle/core';
-
-//
-// Provenance: These functions have been derived from source found at:
-// https://github.com/killercup/cycle-webpack-starter/blob/master/app/helpers/map-errors.js
-//
 
 //
 // Helpers to catch errors

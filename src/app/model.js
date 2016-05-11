@@ -1,6 +1,5 @@
 /** @module model */
 // _ = lodash external dependency (global)
-import {Observable} from 'rx';
 
 /**
  * Produce Cycle.js model states from events
@@ -13,8 +12,8 @@ export default function model(influx) {
   // HTTP request/response model
   //
   const URL = 'http://jsonplaceholder.typicode.com/users/';
-  const httpQueryRequest$ = influx.DOM.appSubmitGetUserInfo$
-    .withLatestFrom(influx.DOM.appPropUserId$
+  const httpQueryRequest$ = influx.DOM.getUserInfo$
+    .withLatestFrom(influx.DOM.changeUserId$
         .where(qid => !isNaN(qid)),
       (submit, qid) => {
         let url = URL;
@@ -30,9 +29,11 @@ export default function model(influx) {
   //
 
   // User information
-  const appQueryUserId$ = influx.DOM.appPropUserId$
+  const userId$ = influx.DOM.changeUserId$
     .startWith('');
-  const appUserInfo$ = Observable.combineLatest(appQueryUserId$, httpQueryResponse$,
+  const userInfo$ = influx.DOM.getUserInfo$
+    .startWith(null)
+    .combineLatest(userId$, httpQueryResponse$,
     (qid, resp) => {
       const u = {qid: ''};
       if ( !isNaN(qid) ) {
@@ -59,34 +60,26 @@ export default function model(influx) {
       return u;
     });
 
-  // Game properties
-  const appGameSphereScale$ = influx.DOM.appPropGameSphereScale$
-    .startWith('1');
-
   //
   // Game interaction model
   //
-  const gameSphereScale$ = influx.DOM.gameSubmitUpdateSphere$
-    .startWith(null)
-    .withLatestFrom(appGameSphereScale$
-      .where(scale => !isNaN(scale) && parseFloat(scale) > 0),
-    (submit, scale) => parseFloat(scale) );
-
-  const gameBackgroundColour$ = influx.DOM.gamePropBackgroundColour$
+  const gameBackgroundColour$ = influx.DOM.changeGameBackgroundColour$
     .startWith(null);
-  const gameResize$ = influx.DOM.gameEventResize$
-      .startWith(null);
+  const gameResize$ = influx.DOM.resizeGame$
+    .startWith(null);
+  const gameSphereScale$ = influx.DOM.changeGameSphereScale$
+    .startWith(100)
+    .map( (value) => value / 100 );
 
   // return model states
   return {
     DOM: {
-      appGameSphereScale$: appGameSphereScale$,
-      appUserInfo$: appUserInfo$
+      userInfo$: userInfo$
     },
     GAME: {
       backgroundColour$: gameBackgroundColour$,
-      sphereScale$: gameSphereScale$,
-      resize$: gameResize$
+      resize$: gameResize$,
+      sphereScale$: gameSphereScale$
     },
     HTTP: {
       user$: httpQueryRequest$

@@ -10,49 +10,48 @@ import {Observable} from 'rx';
  * @return {object} actions - action streams
  */
 export default function intent(dom) {
+  const debounceTime = 100;  // milliseconds
+
   //
   // Game actions
   //
   const elemGameHeader = $("#app > .game > h1").get(0);
   const clickGameBackgroundColour$ = Observable.fromEvent(elemGameHeader, 'click');
-  const eventResizeGame$ = dom.events('resize');
+  const eventResizeGame$ = dom.events('resize')
+    .debounce(debounceTime);
 
   //
   // Application form actions
   //
-  const debounceTime = 100;  // milliseconds
 
   // UserID form
   const inputUserId$ = dom.select('.input-user-id')
     .events('input')
     .debounce(debounceTime)
     .map(ev => ev.target.value)
-    .distinctUntilChanged()
-    .tap((value) => {
-      console.log("intent: inputUserID: %s", value);
-    });
+    .distinctUntilChanged();
   const clickGetUserInfo$ = dom.select('.button-get-user-info')
     .events('click');
 
   // Game properties form
-  const inputGameSphereScale$ = dom.select('.input-sphere-scale')
-    .events('input')
-    .debounce(debounceTime)
-    .map(ev => ev.target.value)
-    .distinctUntilChanged()
-    .tap((value) => {
-      console.log("intent: inputGameSphereRadius: %s", value);
-    });
-  const clickUpdateSphere$ = dom.select('.button-update-sphere')
-    .events('click');
+  // const inputGameSphereScale$ = dom.select('.input-sphere-scale')
+  //   .events('input')
+  //   .debounce(debounceTime)
+  //   .map(ev => ev.target.value)
+  //   .distinctUntilChanged()
+  //   .tap((value) => {
+  //     console.log("intent: inputGameSphereRadius: %s", value);
+  //   });
+  // const clickUpdateSphere$ = dom.select('.button-update-sphere')
+  //  .events('click');
 
   // return action stream(s)
   return {
-    appPropUserId$ : inputUserId$,
-    appPropGameSphereScale$ : inputGameSphereScale$,
-    appSubmitGetUserInfo$: clickGetUserInfo$,
-    gamePropBackgroundColour$: clickGameBackgroundColour$,
-    gameEventResize$ : eventResizeGame$,
-    gameSubmitUpdateSphere$: clickUpdateSphere$
+    changeUserId$ : inputUserId$,
+    changeGameBackgroundColour$: clickGameBackgroundColour$,
+    // changeGameSphereScale$ : inputGameSphereScale$,
+    getUserInfo$: clickGetUserInfo$,
+    resizeGame$ : eventResizeGame$
+    // updateGameSphere$: clickUpdateSphere$
   };
 }
