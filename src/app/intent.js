@@ -28,30 +28,15 @@ export default function intent(dom) {
   const inputUserId$ = dom.select('.input-user-id')
     .events('input')
     .debounce(debounceTime)
-    .map(ev => ev.target.value)
-    .distinctUntilChanged();
+    .map(ev => ev.target.value);
   const clickGetUserInfo$ = dom.select('.button-get-user-info')
     .events('click');
-
-  // Game properties form
-  // const inputGameSphereScale$ = dom.select('.input-sphere-scale')
-  //   .events('input')
-  //   .debounce(debounceTime)
-  //   .map(ev => ev.target.value)
-  //   .distinctUntilChanged()
-  //   .tap((value) => {
-  //     console.log("intent: inputGameSphereRadius: %s", value);
-  //   });
-  // const clickUpdateSphere$ = dom.select('.button-update-sphere')
-  //  .events('click');
 
   // return action stream(s)
   return {
     changeUserId$ : inputUserId$,
     changeGameBackgroundColour$: clickGameBackgroundColour$,
-    // changeGameSphereScale$ : inputGameSphereScale$,
     getUserInfo$: clickGetUserInfo$,
     resizeGame$ : eventResizeGame$
-    // updateGameSphere$: clickUpdateSphere$
   };
 }

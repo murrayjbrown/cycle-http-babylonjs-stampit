@@ -9,15 +9,29 @@
  */
 export default function model(influx) {
   //
-  // HTTP request/response model
+  // User query form
+  //
+  const userQuery$ = influx.DOM.changeUserId$
+    .startWith('')
+    .map( (id) => {
+      const user = { id: "" };
+      if ( !isNaN(id) ) {
+        user.id = id;
+      } else {
+        user.error = "Userid must be an unsigned integer value.";
+      }
+      return user;
+    });
+
+  //
+  // HTTP query request
   //
   const URL = 'http://jsonplaceholder.typicode.com/users/';
   const httpQueryRequest$ = influx.DOM.getUserInfo$
-    .withLatestFrom(influx.DOM.changeUserId$
-        .where(qid => !isNaN(qid)),
-      (submit, qid) => {
-        let url = URL;
-        url += qid ? qid : '1';
+    .withLatestFrom(userQuery$
+        .where(user => !isNaN(user.id) && parseInt(user.id) > 0 ),
+      (submit, user) => {
+        const url = URL + user.id;
         console.log("model: query URL: %s", url);
         return url;
       });
@@ -25,30 +39,20 @@ export default function model(influx) {
     .startWith({});
 
   //
-  // Application model
+  // HTTP query response
   //
-
-  // User information
-  const userId$ = influx.DOM.changeUserId$
-    .startWith('');
-  const userInfo$ = influx.DOM.getUserInfo$
-    .startWith(null)
-    .combineLatest(userId$, httpQueryResponse$,
-    (qid, resp) => {
-      const u = {qid: ''};
-      if ( !isNaN(qid) ) {
-        u.qid = qid;
-      } else {
-        u.error = "ERROR: userid must be a numeric value.";
-      }
+  const userInfo$ = httpQueryResponse$
+    .map( (resp) => {
+      const u = {};
       if (_.isObject(resp)) {
+        if ( _.isObject(resp.request) && 'url' in resp.request) {
+          u.query = resp.request.url;
+        }
         if ('error' in resp) {
-          u.query = URL + qid;
           u.error = resp.error;
         }
         if ('message' in resp) {
           const info = resp.message;
-          u.query = URL + qid;
           if ('id' in info) {
             u.id = info.id ? info.id : "";
             u.name = info.name ? info.name : "";
@@ -74,6 +78,7 @@ export default function model(influx) {
   // return model states
   return {
     DOM: {
+      userQuery$: userQuery$,
       userInfo$: userInfo$
     },
     GAME: {

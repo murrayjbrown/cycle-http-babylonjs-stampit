@@ -35,13 +35,14 @@ export default function receive(HTTPsource) {
         console.log("receive: " + NOTAVAIL);
         result = { error: NOTAVAIL };
       } else if ( _.isObject(resp) ) {
+        result['request'] = resp.request;
         if ('body' in resp) {
           if ('type' in resp) {
             if (resp.type === "application/json") {
               console.log("receive: JSON message");
-              result = { message : resp.body };
+              result['message'] = resp.body;
             } else {
-              result = { error: "Unexpected content-type - " + resp.type};
+              result['error'] = "Unexpected content-type - " + resp.type;
             }
           }
         }

@@ -1,4 +1,6 @@
 /** @module view */
+// _ = lodash external dependency (global)
+
 import {Observable} from 'rx';
 import {a, button, div, hr, h2, h4, input, label, p, span} from "@cycle/dom";
 
@@ -11,51 +13,67 @@ import {a, button, div, hr, h2, h4, input, label, p, span} from "@cycle/dom";
  */
 export default function view(states, components) {
 
-  function queryForm(query) {
-    const queryUserid = (query && query.qid) ? query.qid : '';
-    return [
-      label('User: '),
-      input('.input-user-id', {style: 'text', value: queryUserid }),
+  function formError(msg) {
+    let errorMsg = "";
+    if (msg) {
+      errorMsg = [ p('.error', msg) ];
+    }
+    return errorMsg;
+  }
+
+  function queryForm(user) {
+    return [ label('User: '),
+      input('.input-user-id', {style: 'text'}),
       button('.button-get-user-info', 'Get user info'),
+      formError(user.error),
       hr()
     ];
   }
 
   function queryResult(info) {
-    return div(".result", [
-      info && info.query ?
-        div(".query", [
+    let result = "";
+    let infoQuery = "";
+    let infoError = "";
+    let userDetails = "";
+    if ( _.isObject(info) ) {
+      if ( 'query' in info ) {
+        infoQuery = div(".query", [
           span('.query .slug', 'Query: '),
           info.query ? span('.query .url', info.query) : '',
           hr()
-        ])
-        : "",
-      info && info.error ?
-        div(".error", [
-          p(info.error)
-        ])
-        : "",
-      info && info.id ?
-        div(".details", [
+        ]);
+      }
+      if( 'error' in info ) {
+        infoError = formError(info.error);
+      }
+      if ( 'id' in info ) {
+        userDetails = div(".details", [
           div(".user-details", [
             h2('.user-name', String(info.id) + ": " + info.name),
             h4('.user-email', info.email),
             a('.user-website', {href: info.site}, info.site)
           ])
-        ])
-        : ""
-    ]);
+        ]);
+      }
+      result = div(".result", [
+        infoQuery,
+        infoError,
+        userDetails
+      ]);
+    }
+    return result;
   }
 
   // construct virtual DOM tree
   const vtree$ = Observable.combineLatest(
     components.sphereSlider$,
+    states.userQuery$,
     states.userInfo$,
-    (sphereSlider, user) => {
+    (sphereSlider, userQuery, userInfo) => {
       return div([
         sphereSlider,
-        queryForm(user),
-        queryResult(user)
+        queryForm(userQuery),
+        queryResult(userInfo)
       ]);
     });
 
