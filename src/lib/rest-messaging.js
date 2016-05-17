@@ -85,11 +85,23 @@ export function send(HTTPstates) {
       console.log(err);
       throw new Error(err);
     }
-    return {
+    const type = 'type' in props ? props.type : "application/json";
+    const req = {
       url: props.url,
+      type: type,
+      accept: 'accept' in props ? props.accept : type,
+      attach: 'attach' in props ? props.attach : null,
+      headers: 'headers' in props ? props.accept : null,
       method: 'method' in props ? props.method : "GET",
-      type: 'type' in props ? props.type : "application/json"
+      progress: 'progress' in props ? props.progress : false,
+      query: 'query' in props ? props.query : null,
+      redirects: 'redirects' in props ? props.redirects : 5,
+      send: 'send' in props ? props.send : null,
+      user: 'user' in props ? props.user : null,
+      password: 'password' in props ? props.password : null,
+      withCredentials: 'withCredentials' in props ? props.withCredentials : false
     };
+    return req;
   });
 
   // return HTTP request stream
