@@ -5,9 +5,35 @@
  * Produce Cycle.js model states from events
  * @function model
  * @param {object} influx - stimulus streams
+ * @param {object} properties - model properties
  * @return {object} states - state streams
  */
-export default function model(influx) {
+export default function model(influx, properties) {
+  //
+  // Validate and set REST service access point property defaults
+  //
+  if ( !('REST' in properties) || !properties.REST ) {
+    const err = "receive: [error] missing or null 'endpoint' property.";
+    console.log(err);
+    throw new Error(err);
+  }
+  const rest = properties.REST;
+  if ( !('url' in rest) || !rest.url ) {
+    const err = "receive: [error] missing or null 'url' property.";
+    console.log(err);
+    throw new Error(err);
+  }
+  if ( !('type' in rest) || !rest.type ) {
+    const warn = "receive: [warning] missing or null 'type' property.";
+    console.log(warn);
+    rest['type'] = "application/json";
+  }
+  if ( !('method' in rest) || !rest.method ) {
+    const warn = "receive: [warning] missing or null 'method' property.";
+    console.log(warn);
+    rest['method'] = "GET";
+  }
+
   //
   // User query form
   //
@@ -26,16 +52,18 @@ export default function model(influx) {
   //
   // HTTP query request
   //
-  const URL = 'http://jsonplaceholder.typicode.com/users/';
   const httpQueryRequest$ = influx.DOM.getUserInfo$
     .withLatestFrom(userQuery$
         .where(user => !isNaN(user.id) && parseInt(user.id) > 0 ),
       (submit, user) => {
-        const url = URL + user.id;
-        console.log("model: query URL: %s", url);
-        return url;
+        console.log("model: query URL: %s", rest.url + user.id);
+        return {
+          url: rest.url + user.id,
+          method: rest.method,
+          type: rest.type
+        };
       });
-  const httpQueryResponse$ = influx.HTTP.queryUser$
+  const httpQueryResponse$ = influx.HTTP.message$
     .startWith({});
 
   //
@@ -87,7 +115,7 @@ export default function model(influx) {
       sphereScale$: gameSphereScale$
     },
     HTTP: {
-      user$: httpQueryRequest$
+      send$: httpQueryRequest$
     }
   };
 }

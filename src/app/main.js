@@ -6,12 +6,11 @@ import isolate from "@cycle/isolate";
 import game from "game.js";
 import intent from "intent.js";
 import model from "model.js";
-import receive from "receive.js";
-import send from "send.js";
 import view from "view.js";
 
-// reusable Cycle.js dataflow component(s)
+// reusable dataflow component(s)
 import {LabeledSlider} from "labeled-slider.js";
+import {receive, send} from "rest-messaging.js";
 
 /**
  * Main function of Cycle.js app
@@ -20,7 +19,6 @@ import {LabeledSlider} from "labeled-slider.js";
  * @return {object} sinks - Cycle.js driver sinks
  */
 export default function main(sources) {
-  const components = {};
   //
   // Determine actions from human intent
   //
@@ -29,12 +27,17 @@ export default function main(sources) {
   //
   // Receive HTTP response messages
   //
-  const messages = receive( sources.HTTP );
+  const restProps = {   // REST service properties
+    url: "http://jsonplaceholder.typicode.com/users/",
+    method: "GET",
+    type: "application/json"
+  };
+  const messages = receive( sources.HTTP, restProps );
 
   //
   // Embed reusable dataflow component(s)
   //
-
+  const components = {};
   // LabeledSlider component used to scale sphere size for game
   const sphereProps$ = Observable.of({
     label: 'Sphere scale: ', unit: '%', min: 0, initial: 100, max: 300
@@ -47,7 +50,7 @@ export default function main(sources) {
   //
   // Determine new model state(s)
   //
-  const states = model( {DOM: actions, HTTP: messages} );
+  const states = model( {DOM: actions, HTTP: messages}, {REST: restProps} );
 
   //
   // Send HTTP request messages

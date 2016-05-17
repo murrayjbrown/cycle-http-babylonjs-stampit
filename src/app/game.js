@@ -54,7 +54,6 @@ export default function game(states) {
       };
     });
 
-
   // return effects$ stream
   return Observable.merge(
     backgroundColour$,
