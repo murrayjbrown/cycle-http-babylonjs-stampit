@@ -6,34 +6,28 @@ import {Observable} from 'rx';
  * Receive REST service responses filtered by request properties
  * @function receive
  * @param {object} HTTPsource - HTTP driver sources
- * @param {object} RESTprops - REST request properties
+ * @param {object} props - REST request properties
  * @return {object} messages - message stream(s)
  */
-export function receive(HTTPsource, RESTprops) {
+export function receive(HTTPsource, props) {
   const NOTAVAIL = "Not available";
-
-  //
-  // validate and/or set filter property defaults
-  //
-  if ( !('url' in RESTprops) || !RESTprops.url ) {
+  if ( !('url' in props) || !props.url ) {
     const err = "missing or invalid 'url' property.";
     console.log(err);
     throw new Error(err);
   }
-  const props = {
-    url: RESTprops.url,
-    method: 'method' in RESTprops ? RESTprops.method : "GET",
-    type: 'type' in RESTprops ? RESTprops.type : "application/json"
-  };
+  const req = Object.assign({
+    method: "GET",
+    type: "application/json"
+  }, props);
 
   //
   // Filter & flatten response message stream(s).
   //
-
   // We catch any http error objects and pass them through;
   // this allows for retries after an error occurs.
   const message$ = HTTPsource
-    .filter(resp$ => resp$.request.url.indexOf(props.url) >= 0)
+    .filter(resp$ => resp$.request.url.indexOf(req.url) >= 0)
     .flatMap(resp => resp.catch(Observable.just({
       url: ('request' in resp && 'url' in resp.request) ?
         resp.request.url : "",
@@ -48,7 +42,7 @@ export function receive(HTTPsource, RESTprops) {
         result['request'] = resp.request;
         if ('body' in resp) {
           if ('type' in resp) {
-            if (resp.type === props.type) {
+            if (resp.type === req.type) {
               result['message'] = resp.body;
             } else {
               result['error'] = "Unexpected content-type - '" + resp.type + "'.";
@@ -85,23 +79,11 @@ export function send(HTTPstates) {
       console.log(err);
       throw new Error(err);
     }
-    const type = 'type' in props ? props.type : "application/json";
-    const req = {
-      url: props.url,
-      type: type,
-      accept: 'accept' in props ? props.accept : type,
-      attach: 'attach' in props ? props.attach : null,
-      headers: 'headers' in props ? props.accept : null,
-      method: 'method' in props ? props.method : "GET",
-      progress: 'progress' in props ? props.progress : false,
-      query: 'query' in props ? props.query : null,
-      redirects: 'redirects' in props ? props.redirects : 5,
-      send: 'send' in props ? props.send : null,
-      user: 'user' in props ? props.user : null,
-      password: 'password' in props ? props.password : null,
-      withCredentials: 'withCredentials' in props ? props.withCredentials : false
-    };
-    return req;
+    return Object.assign({
+      method: "GET",
+      type: "application/json",
+      accept: "application/json"
+    }, props);
   });
 
   // return HTTP request stream

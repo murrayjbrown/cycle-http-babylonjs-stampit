@@ -51,7 +51,7 @@ export default function view(states, components) {
           div(".user-details", [
             h2('.user-name', String(info.id) + ": " + info.name),
             h4('.user-email', info.email),
-            a('.user-website', {href: info.site}, info.site)
+            a('.user-website', {href: info.website}, info.website)
           ])
         ]);
       }

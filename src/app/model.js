@@ -10,29 +10,22 @@
  */
 export default function model(influx, properties) {
   //
-  // Validate and set REST service access point property defaults
+  // Validate and set REST service property defaults
   //
   if ( !('REST' in properties) || !properties.REST ) {
-    const err = "receive: [error] missing or null 'endpoint' property.";
+    const err = "receive: [error] missing or null 'REST' model properties.";
     console.log(err);
     throw new Error(err);
   }
-  const rest = properties.REST;
-  if ( !('url' in rest) || !rest.url ) {
-    const err = "receive: [error] missing or null 'url' property.";
+  if ( !('url' in properties.REST) || !properties.REST ) {
+    const err = "receive: [error] missing or null 'url' REST model property.";
     console.log(err);
     throw new Error(err);
   }
-  if ( !('type' in rest) || !rest.type ) {
-    const warn = "receive: [warning] missing or null 'type' property.";
-    console.log(warn);
-    rest['type'] = "application/json";
-  }
-  if ( !('method' in rest) || !rest.method ) {
-    const warn = "receive: [warning] missing or null 'method' property.";
-    console.log(warn);
-    rest['method'] = "GET";
-  }
+  const rest = Object.assign({
+    method: "GET",
+    type: "application/json"
+  }, properties.REST);
 
   //
   // User query form
@@ -72,21 +65,12 @@ export default function model(influx, properties) {
   const userInfo$ = httpQueryResponse$
     .map( (resp) => {
       const u = {};
-      if (_.isObject(resp)) {
-        if ( _.isObject(resp.request) && 'url' in resp.request) {
-          u.query = resp.request.url;
-        }
+      if (_.isObject(resp) && _.isObject(resp.request)) {
+        u.query = 'url' in resp.request ? resp.request.url : null;
         if ('error' in resp) {
           u.error = resp.error;
-        }
-        if ('message' in resp) {
-          const info = resp.message;
-          if ('id' in info) {
-            u.id = info.id ? info.id : "";
-            u.name = info.name ? info.name : "";
-            u.email = info.email ? info.email : "";
-            u.site = info.website ? info.website : "";
-          }
+        } else if ('message' in resp) {
+          Object.assign(u, resp.message);
         }
       }
       return u;
