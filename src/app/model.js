@@ -2,30 +2,30 @@
 // _ = lodash external dependency (global)
 
 /**
- * Produce Cycle.js model states from events
+ * Produce Cycle.js model states from input stimuli (actions & events)
  * @function model
  * @param {object} influx - stimulus streams
- * @param {object} properties - model properties
+ * @param {object} props - model properties
  * @return {object} states - state streams
  */
-export default function model(influx, properties) {
+export default function model(influx, props) {
   //
   // Validate and set REST service property defaults
   //
-  if ( !('REST' in properties) || !properties.REST ) {
+  if ( !('REST' in props) || !props.REST ) {
     const err = "receive: [error] missing or null 'REST' model properties.";
     console.log(err);
     throw new Error(err);
   }
-  if ( !('url' in properties.REST) || !properties.REST ) {
-    const err = "receive: [error] missing or null 'url' REST model property.";
+  if ( !('url' in props.REST) || !props.REST ) {
+    const err = "receive: [error] missing or null 'url' in model REST properties.";
     console.log(err);
     throw new Error(err);
   }
   const rest = Object.assign({
     method: "GET",
     type: "application/json"
-  }, properties.REST);
+  }, props.REST);
 
   //
   // User query form
@@ -63,10 +63,12 @@ export default function model(influx, properties) {
   // HTTP query response
   //
   const userInfo$ = httpQueryResponse$
+    .where( (resp) => _.isPlainObject(resp) )
     .map( (resp) => {
       const u = {};
-      if (_.isObject(resp) && _.isObject(resp.request)) {
-        u.query = 'url' in resp.request ? resp.request.url : null;
+      if ( 'request' in resp && _.isPlainObject(resp.request) ) {
+        u.query = 'url' in resp.request ?
+          resp.request.url : null;
         if ('error' in resp) {
           u.error = resp.error;
         } else if ('message' in resp) {

@@ -35,7 +35,7 @@ export default function view(states, components) {
     let infoQuery = "";
     let infoError = "";
     let userDetails = "";
-    if ( _.isObject(info) ) {
+    if ( _.isPlainObject(info) ) {
       if ( 'query' in info ) {
         infoQuery = div(".query", [
           span('.query .slug', 'Query: '),

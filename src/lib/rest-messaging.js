@@ -40,14 +40,12 @@ export function receive(HTTPsource, props) {
         result = { error: resp.err };
       } else {
         result['request'] = resp.request;
-        if ('body' in resp) {
-          if ('type' in resp) {
-            if (resp.type === req.type) {
-              result['message'] = resp.body;
-            } else {
-              result['error'] = "Unexpected content-type - '" + resp.type + "'.";
-              console.log("receive: [error] %s", result['error']);
-            }
+        if ('body' in resp && 'type' in resp) {
+          if (resp.type === req.type) {
+            result['message'] = resp.body;
+          } else {
+            result['error'] = "Unexpected content-type - '" + resp.type + "'.";
+            console.log("receive: [error] %s", result['error']);
           }
         }
       }
@@ -72,7 +70,7 @@ export function send(HTTPstates) {
   // Map HTTP state stream onto HTTP request stream
   //
   const request$ = HTTPstates.send$
-  .where( (props) => props && _.isObject(props) )
+  .where( (props) => props && _.isPlainObject(props) )
   .map( (props) => {
     if ( !('url' in props) || !props.url ) {
       const err = "missing or invalid 'url' property.";
