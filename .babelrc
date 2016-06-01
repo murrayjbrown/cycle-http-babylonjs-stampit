@@ -1,5 +1,4 @@
 {
-    // "only": "*.es6",
     "env": {
         "dev": {
             "stage": 2

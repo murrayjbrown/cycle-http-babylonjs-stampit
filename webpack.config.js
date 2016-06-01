@@ -9,11 +9,11 @@ module.exports = {
     modulesDirectories: ['app', 'lib', 'node_modules', 'public', 'tests']
   },
   entry: {
-    common: [
-      path.join(__dirname, "build", "common.js")
-    ],
     app: [
       path.join(__dirname, "build", "app")
+    ],
+    common: [
+      path.join(__dirname, "build", "common.js")
     ]
   },
   output: {

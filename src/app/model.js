@@ -4,9 +4,9 @@
 /**
  * Produce Cycle.js model states from input stimuli (actions & events)
  * @function model
- * @param {object} influx - stimulus streams
- * @param {object} props - model properties
- * @return {object} states - state streams
+ * @param {Object} influx - stimulus streams
+ * @param {Object} props - model properties
+ * @return {Object} states - state streams
  */
 export default function model(influx, props) {
   //

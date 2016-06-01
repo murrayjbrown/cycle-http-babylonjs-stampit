@@ -6,11 +6,11 @@ import {Observable} from 'rx';
 /**
  * Produce Cycle.js actions from DOM intents
  * @function intent
- * @param {object} dom - DOM input effects
- * @return {object} actions - action streams
+ * @param {Object} dom - DOM input effects
+ * @return {Object} actions - action streams
  */
 export default function intent(dom) {
-  const debounceTime = 100;  // milliseconds
+  const squelchTime = 200;  // milliseconds
 
   //
   // Game actions
@@ -18,7 +18,7 @@ export default function intent(dom) {
   const elemGameHeader = $("#app > .game > h1").get(0);
   const clickGameBackgroundColour$ = Observable.fromEvent(elemGameHeader, 'click');
   const eventResizeGame$ = dom.events('resize')
-    .debounce(debounceTime);
+    .throttle(squelchTime);
 
   //
   // Application form actions
@@ -27,7 +27,7 @@ export default function intent(dom) {
   // UserID form
   const inputUserId$ = dom.select('.input-user-id')
     .events('input')
-    .debounce(debounceTime)
+    .debounce(squelchTime)
     .map(ev => ev.target.value);
   const clickGetUserInfo$ = dom.select('.button-get-user-info')
     .events('click');

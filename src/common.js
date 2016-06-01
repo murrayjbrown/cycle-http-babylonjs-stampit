@@ -1,3 +1,5 @@
+// requirejs is an external dependency (global)
+
 // Common dependencies
 import Rx from 'rx-lite';
 import { run } from "@cycle/core";

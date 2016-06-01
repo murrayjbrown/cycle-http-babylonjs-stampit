@@ -5,7 +5,7 @@ import {Observable} from 'rx';
 /**
  * Map Babylon game model states onto Cycle.js driver effects functions
  * @function game
- * @param {object} states - game state property streams
+ * @param {Object} states - game state property streams
  * @return {Observable} - game effects functions stream
  */
 export default function game(states) {

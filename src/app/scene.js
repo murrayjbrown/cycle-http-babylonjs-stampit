@@ -4,8 +4,8 @@
 /**
  * Create a Bablyon scene
  * @function createScene
- * @param {object} engine - game engine
- * @return {object} scene - scene object
+ * @param {Object} engine - game engine
+ * @return {Object} scene - scene object
  */
 export function createScene(engine) {
   // get rendering canvas

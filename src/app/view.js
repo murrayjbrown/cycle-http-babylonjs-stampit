@@ -7,8 +7,8 @@ import {a, button, div, hr, h2, h4, input, label, p, span} from "@cycle/dom";
 /**
  * Produce Cycle.js virtual DOM tree states from model states
  * @function view
- * @param {object} states - model state streams
- * @param {object} components - component Virtual DOM tree streams
+ * @param {Object} states - model state streams
+ * @param {Object} components - component Virtual DOM tree streams
  * @return {Observable} vtree$ - application Virtual DOM tree stream
  */
 export default function view(states, components) {

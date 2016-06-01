@@ -15,8 +15,8 @@ import {receive, send} from "rest-messaging.js";
 /**
  * Main function of Cycle.js app
  * @function main
- * @param {object} sources - Cycle.js driver sources
- * @return {object} sinks - Cycle.js driver sinks
+ * @param {Object} sources - Cycle.js driver sources
+ * @return {Object} sinks - Cycle.js driver sinks
  */
 export default function main(sources) {
   //
@@ -48,7 +48,7 @@ export default function main(sources) {
   actions['changeGameSphereScale$'] = sphereSlider.value$;
 
   //
-  // Determine new model state(s)
+  // Determine model state(s)
   //
   const states = model( {DOM: actions, HTTP: messages}, {REST: restProps} );
 
