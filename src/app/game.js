@@ -1,5 +1,5 @@
 /** @module game */
-// BABYLON = Babylon external dependency (global)
+import BABYLON from 'babylonjs/babylon';
 
 //
 // This module processes changes to the application state(s)

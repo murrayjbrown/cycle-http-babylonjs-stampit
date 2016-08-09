@@ -1,6 +1,4 @@
 /** @module intent */
-// $ = jQuery external dependency (global)
-
 //
 // This module interprets DOM input effects as human intents,
 // which are mapped upon actions that will be applied to the
@@ -21,7 +19,8 @@ export default function intent(dom) {
   //
   // Game actions
   //
-  const elemGameHeader = $("#app > .game > h1").get(0);
+  const elemGameHeader = document.getElementById("app")
+    .getElementsByClassName("gameHeader").item(0);
   const clickGameBackgroundColour$ = Observable.fromEvent(elemGameHeader, 'click');
   const eventResizeGame$ = dom.events('resize')
     .throttle(squelchTime);

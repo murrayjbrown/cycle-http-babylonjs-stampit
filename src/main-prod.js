@@ -9,14 +9,11 @@
 requirejs.config({
   paths: {
     appBundle: '../dist/app/app.bundle',
-    commonBundle: '../dist/app/common.bundle',
-    babylon: 'https://cdnjs.cloudflare.com/ajax/libs/babylonjs/2.3.0/babylon',
-    jquery: 'https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min',
-    lodash: 'https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.11.2/lodash.min'
+    commonBundle: '../dist/app/common.bundle'
   }
 });
-requirejs(['babylon', 'jquery', 'lodash', 'commonBundle'],
-  function(BABYLON, $, _, common) {
+requirejs(['commonBundle'],
+  function(common) {
     // load application bundle
     requirejs(['appBundle'], function(bundle) {
       bundle.app();

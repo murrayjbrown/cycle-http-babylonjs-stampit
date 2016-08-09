@@ -1,7 +1,13 @@
 {
   "name": "cycle-babylon-http-example",
+  "repository": {
+    "private": true,
+    "type": "git",
+    "url": "git@bitbucket.org:murraybrown/cycle-app.git"
+  },
   "dependencies": {
-    "requirejs": "latest",
+    "babylonjs": "^2.4.0",
+    "requirejs": "^2.2.0",
     "rx": "latest",
     "@cycle/core": "latest",
     "@cycle/dom": "latest",

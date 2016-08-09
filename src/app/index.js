@@ -1,5 +1,4 @@
 /** @module app */
-
 //
 // This is the entry point module for the application.
 // It mounts the application on the DOM tree and
@@ -24,20 +23,22 @@ export function app() {
   //  element; the game engine needs it to be persistent.
   const appElement = document.getElementById("app")
   appElement.innerHTML = '<div class="game">' +
-      '<h1>Cycle.js Babylon game demo app</h1>' +
-      '<canvas />' +
+      '<h2 class="gameHeader">Cycle.js Babylon game demo app</h2>' +
+      '<canvas class=gameCanvas />' +
     '</div>' +
     '<div class="vdom">' +
     '</div>';
 
   // Mount points for drivers
-  const appVdom = $("#app > .vdom").get(0);
-  const gameCanvas = $("#app > .game > canvas").get(0);
+  const appVdomElement = document.getElementById("app")
+    .getElementsByClassName("vdom").item(0);
+  const gameCanvasElement = document.getElementById("app")
+    .getElementsByClassName("gameCanvas").item(0);
 
   // Cycle effects drivers
   const drivers = {
-    DOM: makeDOMDriver(appVdom),
-    GAME: makeGameDriver(gameCanvas, createScene),
+    DOM: makeDOMDriver(appVdomElement),
+    GAME: makeGameDriver(gameCanvasElement, createScene),
     HTTP: makeHTTPDriver()
   };
 

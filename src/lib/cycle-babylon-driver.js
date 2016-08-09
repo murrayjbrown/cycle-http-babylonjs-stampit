@@ -1,5 +1,5 @@
 /** @module cycle-babylon-driver */
-// BABYLON = Babylon external dependency (global)
+import BABYLON from 'babylonjs/babylon';
 import { Observable } from 'rx';
 
 /**

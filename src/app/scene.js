@@ -1,5 +1,5 @@
 /** @module scene */
-// BABYLON = Babylon external dependency (global)
+import BABYLON from 'babylonjs/babylon';
 
 //
 // This module is used by the Babylon effects driver to create an initial
