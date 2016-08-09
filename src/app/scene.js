@@ -1,6 +1,12 @@
 /** @module scene */
 // BABYLON = Babylon external dependency (global)
 
+//
+// This module is used by the Babylon effects driver to create an initial
+// scene on the canvas, which may subsequently be modified by the game
+// effects module in response to DOM input effects.
+//
+
 /**
  * Create a Bablyon scene
  * @function createScene

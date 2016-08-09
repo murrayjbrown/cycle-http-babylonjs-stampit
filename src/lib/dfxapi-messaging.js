@@ -77,7 +77,7 @@ export function send(HTTPstates) {
   // Map HTTP state stream onto HTTP request stream
   //
   const request$ = HTTPstates.send$
-  .where( (props) => props && _.isObject(props) )
+  .where( (props) => props && typeof props === 'object' )
   .map( (props) => {
     if ( !('url' in props) || !props.url ) {
       const err = "missing or invalid 'url' property.";

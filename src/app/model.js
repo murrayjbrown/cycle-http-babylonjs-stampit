@@ -1,5 +1,4 @@
 /** @module model */
-// _ = lodash external dependency (global)
 
 /**
  * Produce Cycle.js model states from input stimuli (actions & events)
@@ -63,10 +62,10 @@ export default function model(influx, props) {
   // HTTP query response
   //
   const userInfo$ = httpQueryResponse$
-    .where( (resp) => _.isPlainObject(resp) )
+    .where( (resp) => resp )
     .map( (resp) => {
       const u = {};
-      if ( 'request' in resp && _.isPlainObject(resp.request) ) {
+      if ( 'request' in resp ) {
         u.query = 'url' in resp.request ?
           resp.request.url : null;
         if ('error' in resp) {

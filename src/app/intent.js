@@ -1,7 +1,13 @@
 /** @module intent */
 // $ = jQuery external dependency (global)
-import {Observable} from 'rx';
 
+//
+// This module interprets DOM input effects as human intents,
+// which are mapped upon actions that will be applied to the
+// application state model.
+//
+
+import {Observable} from 'rx';
 
 /**
  * Produce Cycle.js actions from DOM intents

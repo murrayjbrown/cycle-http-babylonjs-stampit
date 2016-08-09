@@ -1,7 +1,14 @@
 /** @module game */
-import {Observable} from 'rx';
 // BABYLON = Babylon external dependency (global)
 
+//
+// This module processes changes to the application state(s)
+// (as a result of DOM input effects, i.e., human intents, or
+// HTTP response messages received) and renders corresponding
+// effects functions to be processed by the Babylon game driver.
+//
+
+import {Observable} from 'rx';
 /**
  * Map Babylon game model states onto Cycle.js driver effects functions
  * @function game

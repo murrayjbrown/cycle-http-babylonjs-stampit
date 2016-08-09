@@ -1,5 +1,4 @@
 /** @module rest-messaging */
-// _ = lodash external dependency (global)
 import {Observable} from 'rx';
 
 /**
@@ -70,7 +69,7 @@ export function send(HTTPstates) {
   // Map HTTP state stream onto HTTP request stream
   //
   const request$ = HTTPstates.send$
-  .where( (req) => req && _.isPlainObject(req) )
+  .where( (req) => req && typeof req === 'object' )
   .map( (req) => {
     if ( !('url' in req) || !req.url ) {
       const err = "missing or invalid 'url' in request.";

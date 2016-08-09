@@ -1,8 +1,7 @@
 {
-  "name": "cycle-http-query-form",
+  "name": "cycle-babylon-http-example",
   "dependencies": {
     "requirejs": "latest",
-    "jquery": "latest",
     "rx": "latest",
     "@cycle/core": "latest",
     "@cycle/dom": "latest",
@@ -13,7 +12,8 @@
     "babel-preset-react": "latest",
     "babel-preset-es2015": "latest",
     "chai": "latest",
-    "cpy-cli": "latest",
+    "cpy": "latest",
+    "cp-cli": "latest",
     "eslint": "latest",
     "eslint-plugin-lodash-fp": "latest",
     "eslint-plugin-no-class": "latest",
@@ -30,11 +30,7 @@
   "scripts": {
     "babel": "npm run babel:lib && npm run babel:common && npm run babel:app",
     "babel:app":
-      "npm run babel:app1 && npm run babel:app2",
-    "babel:app1":
       "babel -m umd --out-dir build/app src/app/",
-    "babel:app2":
-      "babel -m umd --out-file build/main.js src/main.js",
     "babel:common":
       "babel -m umd --out-file build/common.js src/common.js",
     "babel:lib":
@@ -47,14 +43,16 @@
       "npm run build:common && npm run build:app && npm run build:pack",
     "build:app":
       "npm run compile:js && npm run build:assets && npm run build:vendor",
+    "build:main":
+      "cp-cli src/main-test.js build/main.js",
     "build:assets":
-      "npm run build:html && npm run build:css && npm run build:img",
+      "npm run build:main && npm run build:html && npm run build:img",
     "build:common":
-      "npm run compile:common",
+      "npm run compile:common && npm run build:main",
     "build:css":
       "cpy src/*.css build/ && cpy src/app/*.css build/app/",
     "build:html":
-      "cpy src/*.html build/",
+      "cpy src/*.html build/ && npm run build:css",
     "build:img":
       "ncp src/img build/img",
     "build:json":
@@ -110,9 +108,13 @@
     "dist":
       "npm run dist:app && npm run dist:assets && npm run dist:vendor",
     "dist:app":
-      "cpy build/app/*.bundle.js dist/app/ && cpy build/*.html dist/",
+      "npm run dist:main && npm run dist:bundles",
+    "dist:main":
+      "cp-cli src/main-prod.js dist/main.js",
+    "dist:bundles":
+      "cpy build/app/*bundle.js dist/app/",
     "dist:assets":
-      "npm run dist:css && npm run dist:img",
+      "cpy build/*.html dist/ && npm run dist:css && npm run dist:img",
     "dist:css":
       "cpy build/*.css dist/ && cpy build/app/*.css dist/app/",
     "dist:img":

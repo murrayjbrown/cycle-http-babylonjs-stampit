@@ -1,5 +1,11 @@
 /** @module app */
-// $ = jQuery external dependency (global)
+
+//
+// This is the entry point module for the application.
+// It mounts the application on the DOM tree and
+// invokes its main module with effects drviers
+// via the Cycle.js application runner.
+//
 
 import Rx from "rx";
 import { makeDOMDriver } from "@cycle/dom";
@@ -14,17 +20,19 @@ export function app() {
   Rx.config.longStackSupport = true;
 
   // Append static DOM structure
-  $("#app").append(
-    '<div class="game">' +
+  // Note: The game canvas MUST NOT be a virtual DOM (VDOM)
+  //  element; the game engine needs it to be persistent.
+  const appElement = document.getElementById("app")
+  appElement.innerHTML = '<div class="game">' +
       '<h1>Cycle.js Babylon game demo app</h1>' +
-      '<canvas></canvas>' +
+      '<canvas />' +
     '</div>' +
     '<div class="vdom">' +
-    '</div>');
+    '</div>';
 
-  // Mount points
+  // Mount points for drivers
   const appVdom = $("#app > .vdom").get(0);
-  const gameCanvas = $("#app > .game > canvas");
+  const gameCanvas = $("#app > .game > canvas").get(0);
 
   // Cycle effects drivers
   const drivers = {

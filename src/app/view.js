@@ -1,6 +1,13 @@
 /** @module view */
 // _ = lodash external dependency (global)
 
+//
+// This module processes changes to the application state(s)
+// (as a result of DOM input effects, i.e., human intents, or
+// HTTP response messages received) and renders corresponding
+// virtual DOM elements to be processed by the DOM driver.
+//
+
 import {Observable} from 'rx';
 import {a, button, div, hr, h2, h4, input, label, p, span} from "@cycle/dom";
 
@@ -35,7 +42,7 @@ export default function view(states, components) {
     let infoQuery = "";
     let infoError = "";
     let userDetails = "";
-    if ( _.isPlainObject(info) ) {
+    if ( typeof info === 'object' ) {
       if ( 'query' in info ) {
         infoQuery = div(".query", [
           span('.query .slug', 'Query: '),
