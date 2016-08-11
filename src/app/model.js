@@ -1,4 +1,7 @@
 /** @module model */
+//
+// This module implements the application data model (state).
+//
 
 /**
  * Produce Cycle.js model states from input stimuli (actions & events)

@@ -1,5 +1,4 @@
 /** @module main */
-
 //
 // This is the application's main module. It mounts the application
 // on the DOM tree and invokes its main module with effects drviers

@@ -21,7 +21,7 @@ export function app() {
   // Append static DOM structure
   // Note: The game canvas MUST NOT be a virtual DOM (VDOM)
   //  element; the game engine needs it to be persistent.
-  const appElement = document.getElementById("app")
+  const appElement = document.getElementById("app");
   appElement.innerHTML = '<div class="game">' +
       '<h2 class="gameHeader">Cycle.js Babylon game demo app</h2>' +
       '<canvas class=gameCanvas />' +

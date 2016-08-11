@@ -1,6 +1,12 @@
 /** @module cycle-babylon-driver */
-import BABYLON from 'babylonjs/babylon';
+//
+// This module implements the Babylon effects driver to create an initial
+// scene on the canvas, which may subsequently be modified by the game
+// effects module in response to DOM input effects.
+//
+
 import { Observable } from 'rx';
+import { BabylonPlatFactory } from 'babscape';
 
 /**
  * Make Babylon game engine effects driver for Cycle.js
@@ -9,8 +15,13 @@ import { Observable } from 'rx';
  * @return {function} - game engine effects driver
  */
 export function makeGameDriver(canvas, createScene) {
-  const engine = new BABYLON.Engine(canvas, true);
-  const scene = createScene(engine);
+  // const engine = new BABYLON.Engine(canvas, true);
+  // const scene = createScene(engine);
+
+  const plat = BabylonPlatFactory(canvas);
+  const scene = plat.setup();
+  const engine = plat.getEngine();
+
   /**
    * Babylon game engine effects driver for Cycle.js
    * @param {Observable} effects$ - effects function stream

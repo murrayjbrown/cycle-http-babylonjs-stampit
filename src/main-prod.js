@@ -9,13 +9,14 @@
 requirejs.config({
   paths: {
     appBundle: '../dist/app/app.bundle',
-    commonBundle: '../dist/app/common.bundle'
+    commonBundle: '../dist/app/common.bundle',
+    babylon: '../vendor/babylon-2.4.0'
   }
 });
-requirejs(['commonBundle'],
-  function(common) {
+requirejs(['babylon', 'commonBundle'],
+  (BABYLON, common) => {
     // load application bundle
-    requirejs(['appBundle'], function(bundle) {
+    require(['appBundle'], (bundle) => {
       bundle.app();
     });
   });

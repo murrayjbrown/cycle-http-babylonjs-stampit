@@ -6,15 +6,15 @@
     "url": "git@bitbucket.org:murraybrown/cycle-app.git"
   },
   "dependencies": {
-    "babylonjs": "^2.4.0",
-    "requirejs": "^2.2.0",
     "rx": "latest",
+    "stampit": "^2.1.2",
     "@cycle/core": "latest",
     "@cycle/dom": "latest",
     "@cycle/isolate": "latest"
   },
   "devDependencies": {
     "babel-cli": "latest",
+    "babel-core": "^6.3.17",
     "babel-preset-react": "latest",
     "babel-preset-es2015": "latest",
     "chai": "latest",
