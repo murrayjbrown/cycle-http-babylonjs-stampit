@@ -1,4 +1,5 @@
 /** @module app */
+/* Copyright (c) 2016 Murray J Brown; All rights reserved. */
 //
 // This is the entry point module for the application.
 // It mounts the application on the DOM tree and

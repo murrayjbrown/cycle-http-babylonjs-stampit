@@ -1,4 +1,5 @@
 /** @module rest-messaging */
+/* Copyright (c) 2016 Murray J Brown; All rights reserved. */
 import {Observable} from 'rx';
 
 /**
@@ -56,7 +57,6 @@ export function receive(HTTPsource, props) {
     message$: message$
   };
 }
-
 
 /**
  * Send REST service requests mapped from HTTP model states

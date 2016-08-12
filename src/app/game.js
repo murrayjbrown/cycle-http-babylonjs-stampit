@@ -1,4 +1,5 @@
 /** @module game */
+/* Copyright (c) 2016 Murray J Brown; All rights reserved. */
 //
 // This module processes changes to the application state(s)
 // (as a result of DOM input effects, i.e., human intents, or
@@ -6,8 +7,8 @@
 // effects functions to be processed by the Babylon game driver.
 //
 import {Observable} from 'rx';
+import BABYLON from 'babylonjs/babylon';
 
-// import BABYLON from 'babylonjs/babylon';
 const BJS = BABYLON;  // external dependency
 
 /**

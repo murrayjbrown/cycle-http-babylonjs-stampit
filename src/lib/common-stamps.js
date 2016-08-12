@@ -1,5 +1,8 @@
-// Common useful stamps
-
+/** @module common-stamps */
+/* Copyright (c) 2016 Murray J Brown; All rights reserved. */
+//
+// This module implements some common useful stamps.
+//
 import stampit from 'stampit';
 
 export const Cloneable = stampit

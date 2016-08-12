@@ -1,6 +1,8 @@
+/* Copyright (c) 2016 Murray J Brown; All rights reserved. */
 // External dependencies: see webpack.config.js
 
 // Common bundle dependencies
+import BABYLON from 'babylonjs/babylon';
 import Rx from 'rx-lite';
 import { stampit } from 'stampit';
 import { run } from "@cycle/core";

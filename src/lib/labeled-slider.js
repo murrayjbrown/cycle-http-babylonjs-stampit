@@ -1,11 +1,11 @@
-/**
-** Source: http://cycle.js.org/components.html
-** Author: André Staltz
-** Derivation: Murray J Brown
-** License: MIT 2016
-**/
-
-/** @module view */
+/** @module labeled-slider */
+// This module implements a labeled-slider view component.
+//
+// Source: http://cycle.js.org/components.html
+// Author: André Staltz
+// Derivation: Murray J Brown
+// License: MIT 2016
+//
 import {Observable} from "rx";
 import {div, span, input} from "@cycle/dom";
 
@@ -31,11 +31,14 @@ export function LabeledSlider(sources) {
     (props, value) =>
       div('.labeled-slider', [
         span('.label',
-          props.label + ' ' + value + props.unit
+          props.label + ' '
         ),
         input('.slider', {
           type: 'range', min: props.min, max: props.max, value
-        })
+        }),
+        span('.value',
+          ' ' + value + props.unit
+        )
       ])
   );
 

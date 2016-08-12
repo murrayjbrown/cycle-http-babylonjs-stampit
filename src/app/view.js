@@ -1,6 +1,5 @@
 /** @module view */
-// _ = lodash external dependency (global)
-
+/* Copyright (c) 2016 Murray J Brown; All rights reserved. */
 //
 // This module processes changes to the application state(s)
 // (as a result of DOM input effects, i.e., human intents, or
@@ -20,6 +19,10 @@ import {a, button, div, hr, h2, h4, input, label, p, span} from "@cycle/dom";
  */
 export default function view(states, components) {
 
+  function bgColourButton(bgColour) {
+    return [ button('.colour-game-background', 'Generate random background colour') ];
+  }
+
   function formError(msg) {
     let errorMsg = "";
     if (msg) {
@@ -29,7 +32,9 @@ export default function view(states, components) {
   }
 
   function queryForm(user) {
-    return [ label('User: '),
+    return [ hr(),
+      h4('Query user information from test server'),
+      label('Number: '),
       input('.input-user-id', {style: 'text'}),
       button('.button-get-user-info', 'Get user info'),
       formError(user.error),
@@ -74,10 +79,12 @@ export default function view(states, components) {
   // construct virtual DOM tree
   const vtree$ = Observable.combineLatest(
     components.sphereSlider$,
+    states.gameBackgroundColour$,
     states.userQuery$,
     states.userInfo$,
-    (sphereSlider, userQuery, userInfo) => {
+    (sphereSlider, gameBackgroundColour, userQuery, userInfo) => {
       return div([
+        bgColourButton(gameBackgroundColour),
         sphereSlider,
         queryForm(userQuery),
         queryResult(userInfo)

@@ -1,10 +1,10 @@
 /** @module cycle-babylon-driver */
+/* Copyright (c) 2016 Murray J Brown; All rights reserved. */
 //
 // This module implements the Babylon effects driver to create an initial
 // scene on the canvas, which may subsequently be modified by the game
 // effects module in response to DOM input effects.
 //
-
 import { Observable } from 'rx';
 import { BabylonPlatFactory } from 'babscape';
 

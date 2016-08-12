@@ -24,8 +24,7 @@ module.exports = {
     // crossOriginLoading: "use-credentials"
   },
   externals: [
-    "app",
-    "BABYLON"
+    "app"
   ],
   module: {
     loaders: [{

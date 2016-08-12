@@ -1,10 +1,10 @@
 /** @module intent */
+/* Copyright (c) 2016 Murray J Brown; All rights reserved. */
 //
 // This module interprets DOM input effects as human intents,
 // which are mapped upon actions that will be applied to the
 // application state model.
 //
-
 import {Observable} from 'rx';
 
 /**
@@ -19,9 +19,8 @@ export default function intent(dom) {
   //
   // Game actions
   //
-  const elemGameHeader = document.getElementById("app")
-    .getElementsByClassName("gameHeader").item(0);
-  const clickGameBackgroundColour$ = Observable.fromEvent(elemGameHeader, 'click');
+  const clickGameBackgroundColour$ = dom.select('.colour-game-background')
+    .events('click');
   const eventResizeGame$ = dom.events('resize')
     .throttle(squelchTime);
 

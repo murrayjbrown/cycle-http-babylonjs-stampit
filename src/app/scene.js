@@ -1,11 +1,12 @@
 /** @module scene */
+/* Copyright (c) 2016 Murray J Brown; All rights reserved. */
 //
 // This module is used by the Babylon effects driver to create an initial
 // scene on the canvas, which may subsequently be modified by the game
 // effects module in response to DOM input effects.
 //
+import BABYLON from 'babylonjs/babylon';
 
-// import BABYLON from 'babylonjs/babylon';
 const BJS = BABYLON;  // external dependency
 
 /**

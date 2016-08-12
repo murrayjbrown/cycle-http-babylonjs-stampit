@@ -65,7 +65,7 @@
     "lodash-fp/prefer-constant": ["error", {"arrowFunctions": false}],
     "lodash-fp/prefer-flat-map": "error",
     "lodash-fp/prefer-get": "error",
-    "lodash-fp/prefer-identity": ["error", {"arrowFunctions": false}],
+    "lodash-fp/prefer-identity": ["off", {"arrowFunctions": false}],
     "lodash-fp/preferred-alias": "off",
     "lodash-fp/use-fp": "error",
     "new-cap": [2, {"capIsNew": false}],

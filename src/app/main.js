@@ -1,4 +1,5 @@
 /** @module main */
+/* Copyright (c) 2016 Murray J Brown; All rights reserved. */
 //
 // This is the application's main module. It mounts the application
 // on the DOM tree and invokes its main module with effects drviers
@@ -50,7 +51,7 @@ export default function main(sources) {
   // LabeledSlider component used to scale sphere size for game
   //
   const sphereProps$ = Observable.of({
-    label: 'Sphere scale: ', unit: '%', min: 0, initial: 100, max: 300
+    label: 'Sphere size: ', unit: '%', min: 0, initial: 100, max: 300
   });
   const sphereSources = {DOM: sources.DOM, props$: sphereProps$};
   const sphereSlider = isolate(LabeledSlider)(sphereSources);

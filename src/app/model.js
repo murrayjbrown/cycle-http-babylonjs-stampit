@@ -1,4 +1,5 @@
 /** @module model */
+/* Copyright (c) 2016 Murray J Brown; All rights reserved. */
 //
 // This module implements the application data model (state).
 //
@@ -94,6 +95,7 @@ export default function model(influx, props) {
   // return model states
   return {
     DOM: {
+      gameBackgroundColour$: gameBackgroundColour$,
       userQuery$: userQuery$,
       userInfo$: userInfo$
     },

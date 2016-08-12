@@ -1,11 +1,11 @@
-/**
-** Source: https://github.com/killercup/cycle-webpack-starter/blob/master/app/helpers/map-errors.js
-** Author: Pascal Hertleif
-** Derivation: Murray J Brown
-** License: MIT 2016
-**/
-
 /** @module map-errors */
+// This module implements helpers to catch mapping errors.
+//
+// Source: https://github.com/killercup/cycle-webpack-starter/blob/master/app/helpers/map-errors.js
+// Author: Pascal Hertleif
+// Derivation: Murray J Brown
+// License: MIT 2016
+//
 import {Rx} from '@cycle/core';
 
 //
@@ -44,7 +44,7 @@ function identity(x) {
 */
 export function ifOk(mapper) {
   return (data) => {
-    return isError(data) ? identity(data) : mapper(data);
+    return isError(data) ? data._identity : mapper(data);
   };
 }
 

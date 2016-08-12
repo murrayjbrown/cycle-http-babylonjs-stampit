@@ -1,3 +1,4 @@
+/* Copyright (c) 2016 Murray J Brown; All rights reserved. */
 //
 // This is the script loader for the application, which is
 // referenced in the HTML page, and loads the application modules
@@ -9,12 +10,11 @@
 requirejs.config({
   paths: {
     appBundle: '../dist/app/app.bundle',
-    commonBundle: '../dist/app/common.bundle',
-    babylon: '../vendor/babylon-2.4.0'
+    commonBundle: '../dist/app/common.bundle'
   }
 });
-requirejs(['babylon', 'commonBundle'],
-  (BABYLON, common) => {
+requirejs(['commonBundle'],
+  (common) => {
     // load application bundle
     require(['appBundle'], (bundle) => {
       bundle.app();

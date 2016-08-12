@@ -1,11 +1,20 @@
 {
-  "name": "cycle-babylon-http-example",
+  "name": "cycle-http-babylon-stampit",
+  "description": "A demo for Cycle.js framework with HTTP and BabylonJS drivers",
+  "keywords": ["Babylonjs", "CycleJS", "driver", "game engine", "http", "rx", "ReactiveX", "stampit"],
+  "author" : "Murray J Brown <mjb@mjbrown.com>",
+  "contributors" : [],
+  "copyright": "Copyright (c) 2016 Murray J Brown; All rights reserved.",
+  "version" : "0.1.0",
+  "license": "MIT",
   "repository": {
     "private": true,
     "type": "git",
-    "url": "git@bitbucket.org:murraybrown/cycle-app.git"
+    "url": "git@bitbucket.org:murraybrown/cycle-http-babylon-stampit.git"
   },
+  "main": "",
   "dependencies": {
+    "babylonjs": "^2.4.0",
     "rx": "latest",
     "stampit": "^2.1.2",
     "@cycle/core": "latest",
@@ -26,9 +35,9 @@
     "eslint-plugin-no-inferred-method-name": "latest",
     "file-loader": "latest",
     "json-loader": "latest",
-    "mocha": "latest",
     "ncp": "latest",
     "rimraf": "latest",
+    "tape": "latest",
     "typescript": "latest",
     "url-loader": "latest",
     "webpack": "latest"
@@ -44,17 +53,11 @@
     "babel:tests":
       "babel -m umd --out-dir build/tests/ src/tests/",
     "build":
-      "npm run clean && npm run build:assets && npm run build:all",
+      "npm run clean && npm run build:all && npm run webpack",
     "build:all":
-      "npm run build:common && npm run build:app && npm run build:pack",
-    "build:app":
-      "npm run compile:js && npm run build:assets && npm run build:vendor",
-    "build:main":
-      "cp-cli src/main-test.js build/main.js",
+      "npm run build:assets && npm run build:src",
     "build:assets":
       "npm run build:main && npm run build:html && npm run build:img",
-    "build:common":
-      "npm run compile:common && npm run build:main",
     "build:css":
       "cpy src/*.css build/ && cpy src/app/*.css build/app/",
     "build:html":
@@ -63,94 +66,28 @@
       "ncp src/img build/img",
     "build:json":
       "cpy src/app/*.json build/app/",
-    "build:lib":
-      "npm run compile:lib",
-    "build:common":
-      "npm run compile:common",
-    "build:pack":
-      "npm run webpack",
-    "build:public":
-      "npm run clean:public && ncp dist/ public/",
+    "build:main":
+      "cp-cli src/main-test.js build/main.js",
+    "build:src":
+      "npm run compile && npm run webpack",
     "build:test":
-      "npm run webpack && npm run test",
-    "build:vendor":
-      "ncp vendor build/vendor",
+      "npm run babel:tests && npm run webpack && npm run test",
     "clean":
-      "npm run clean:build && npm run clean:dist && npm run clean:public",
-    "clean:build":
       "rimraf build/* && mkdir -p build/app build/lib build/img",
-    "clean:dist":
-      "rimraf dist/* && mkdir -p dist/img dist/app",
-    "clean:js":
-      "rimraf build/*.js build/app/*.js build/lib/*js",
-    "clean:json":
-      "rimraf build/app/*.json build/lib/*.json",
-    "clean:map":
-      "npm run clean:map:js && npm run clean:map:ts",
-    "clean:map:js":
-      "rimraf build/app/*js.map build/lib/*.js.map",
-    "clean:map:ts":
-      "rimraf build/app/*.d.ts build/lib/*.d.ts",
-    "clean:public":
-      "rimraf public/*",
     "compile":
       "npm run compile:js",
-    "compile:app":
-      "npm run babel:app",
-    "compile:common":
-      "npm run babel:common",
-    "compile:lib":
-      "npm run babel:lib",
     "compile:js":
       "npm run babel",
     "compile:ts":
       "npm run tsc",
-    "deploy":
-      "npm run build:public && npm run deploy:public",
-    "deploy:public":
-      "ncp dist/ public/ && npm run deploy:vendor",
-    "deploy:vendor":
-      "ncp vendor public/vendor",
-    "dist":
-      "npm run dist:app && npm run dist:assets && npm run dist:vendor",
-    "dist:app":
-      "npm run dist:main && npm run dist:bundles",
-    "dist:main":
-      "cp-cli src/main-prod.js dist/main.js",
-    "dist:bundles":
-      "cpy build/app/*bundle.js dist/app/",
-    "dist:assets":
-      "cpy build/*.html dist/ && npm run dist:css && npm run dist:img",
-    "dist:css":
-      "cpy build/*.css dist/ && cpy build/app/*.css dist/app/",
-    "dist:img":
-      "ncp build/img/ dist/img/",
-    "dist:json":
-      "cpy build/app/*.json dist/app/",
-    "dist:vendor":
-      "ncp vendor dist/vendor",
-    "install":
-      "#npm run build && #npm run deploy",
     "env":
       "env",
-    "eslint":
-      "npm run eslint:app && npm run eslint:lib",
-    "eslint:app":
-      "eslint src/app/*.js",
-    "eslint:lib":
-      "eslint src/lib/*.js",
     "lint":
-      "npm run eslint:app & npm run eslint:lib",
-    "lint:app":
-      "npm run eslint:app",
-    "lint:lib":
-      "npm run eslint:lib",
-    "pack":
-      "npm run webpack",
+      "eslint src/app/*.js src/lib/*.js",
     "run":
       "npm run build && cd build && python -m SimpleHTTPServer",
     "test":
-      "mocha tests/",
+      "npm build:tests && tape src/tests/",
     "tsc":
       "npm run tsc:lib && npm run tsc:app",
     "tsc:app":
