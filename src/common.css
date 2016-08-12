@@ -1,0 +1,12 @@
+/* general styling */
+body {
+  font-family: 'open sans', sans-serif;
+  background-color: #eeeeee;
+}
+a {
+  color: black
+}
+#content {
+  width: 90%;
+  margin: auto;
+}

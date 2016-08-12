@@ -1,0 +1,102 @@
+{
+  "name": "cycle-http-babylonjs-stampit",
+  "description": "A demo for Cycle.js framework with HTTP and BabylonJS drivers",
+  "keywords": ["Babylonjs", "CycleJS", "driver", "game engine", "http", "rx", "ReactiveX", "stampit"],
+  "author" : "Murray J Brown <mjb@mjbrown.com>",
+  "contributors" : [],
+  "copyright": "Copyright (c) 2016 Murray J Brown; All rights reserved.",
+  "version" : "0.1.0",
+  "license": "MIT",
+  "repository": {
+    "private": true,
+    "type": "git",
+    "url": "git@github.com:murrayjbrown/cycle-http-babylonjs-stampit.git"
+  },
+  "main": "",
+  "dependencies": {
+    "babylonjs": "^2.4.0",
+    "rx": "latest",
+    "stampit": "^2.1.2",
+    "@cycle/core": "latest",
+    "@cycle/dom": "latest",
+    "@cycle/isolate": "latest"
+  },
+  "devDependencies": {
+    "babel-cli": "latest",
+    "babel-core": "^6.3.17",
+    "babel-preset-react": "latest",
+    "babel-preset-es2015": "latest",
+    "chai": "latest",
+    "cpy": "latest",
+    "cp-cli": "latest",
+    "eslint": "latest",
+    "eslint-plugin-lodash-fp": "latest",
+    "eslint-plugin-no-class": "latest",
+    "eslint-plugin-no-inferred-method-name": "latest",
+    "file-loader": "latest",
+    "json-loader": "latest",
+    "ncp": "latest",
+    "rimraf": "latest",
+    "tape": "latest",
+    "typescript": "latest",
+    "url-loader": "latest",
+    "webpack": "latest"
+  },
+  "scripts": {
+    "babel": "npm run babel:lib && npm run babel:common && npm run babel:app",
+    "babel:app":
+      "babel -m umd --out-dir build/app src/app/",
+    "babel:common":
+      "babel -m umd --out-file build/common.js src/common.js",
+    "babel:lib":
+      "babel -m umd --out-dir build/lib/ src/lib/",
+    "babel:tests":
+      "babel -m umd --out-dir build/tests/ src/tests/",
+    "build":
+      "npm run clean && npm run build:all && npm run webpack",
+    "build:all":
+      "npm run build:assets && npm run build:src",
+    "build:assets":
+      "npm run build:main && npm run build:html && npm run build:img",
+    "build:css":
+      "cpy src/*.css build/ && cpy src/app/*.css build/app/",
+    "build:html":
+      "cpy src/*.html build/ && npm run build:css",
+    "build:img":
+      "ncp src/img build/img",
+    "build:json":
+      "cpy src/app/*.json build/app/",
+    "build:main":
+      "cp-cli src/main-test.js build/main.js",
+    "build:src":
+      "npm run compile && npm run webpack",
+    "build:test":
+      "npm run babel:tests && npm run webpack && npm run test",
+    "clean":
+      "rimraf build/* && mkdir -p build/app build/lib build/img",
+    "compile":
+      "npm run compile:js",
+    "compile:js":
+      "npm run babel",
+    "compile:ts":
+      "npm run tsc",
+    "env":
+      "env",
+    "lint":
+      "eslint src/app/*.js src/lib/*.js",
+    "run":
+      "npm run build && cd build && python -m SimpleHTTPServer",
+    "test":
+      "npm build:tests && tape src/tests/",
+    "tsc":
+      "npm run tsc:lib && npm run tsc:app",
+    "tsc:app":
+      "tsc -d -m umd --outDir build/app src/app/*.ts",
+    "tsc:lib":
+      "tsc -d -m umd --outDir build/lib src/lib/*.ts",
+    "typescript":
+      "npm run tsc",
+    "webpack":
+      "webpack -d --display-modules --display-chunks"
+  }
+}

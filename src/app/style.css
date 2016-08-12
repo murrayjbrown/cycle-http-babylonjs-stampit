@@ -1,0 +1,26 @@
+/* application default styling */
+
+#app {
+  width: 60%;
+  margin: auto;
+}
+#app > .game {
+  width: 80%;
+  margin: auto;
+  margin-top: 6em;
+  text-align: center;
+}
+#app > .game > canvas {
+  width: 100%;
+  margin: auto;
+}
+#app > .vdom {
+  width: 80%;
+  margin: auto;
+}
+#app * .url {
+  font-style: italic;
+}
+#app * .error {
+  color: red;
+}

@@ -1,0 +1,7 @@
+.git
+/build/*
+/dist/*
+/nbproject/
+/node_modules/
+/public/*
+npm-error.log
