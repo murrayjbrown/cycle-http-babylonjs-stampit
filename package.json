@@ -8,7 +8,7 @@
   "version" : "0.1.0",
   "license": "MIT",
   "repository": {
-    "private": true,
+    "private": false,
     "type": "git",
     "url": "git@github.com:murrayjbrown/cycle-http-babylonjs-stampit.git"
   },
