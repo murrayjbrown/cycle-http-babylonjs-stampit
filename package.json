@@ -1,5 +1,5 @@
 {
-  "name": "cycle-http-babylon-stampit",
+  "name": "cycle-http-babylonjs-stampit",
   "description": "A demo for Cycle.js framework with HTTP and BabylonJS drivers",
   "keywords": ["Babylonjs", "CycleJS", "driver", "game engine", "http", "rx", "ReactiveX", "stampit"],
   "author" : "Murray J Brown <mjb@mjbrown.com>",
@@ -10,7 +10,7 @@
   "repository": {
     "private": true,
     "type": "git",
-    "url": "git@bitbucket.org:murraybrown/cycle-http-babylon-stampit.git"
+    "url": "git@github.com:murrayjbrown/cycle-http-babylonjs-stampit.git"
   },
   "main": "",
   "dependencies": {
