@@ -7,6 +7,7 @@
 // License: MIT 2016
 //
 import {Rx} from '@cycle/core';
+import {identity} from 'lodash/fp';
 
 //
 // Helpers to catch errors
@@ -30,9 +31,11 @@ function isError(data) {
   return !!(data && data.error);
 }
 
+/*
 function identity(x) {
   return x;
 }
+*/
 
 /**
 * Return function to check whether data is valid and,
