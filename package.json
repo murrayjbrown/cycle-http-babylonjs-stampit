@@ -19,6 +19,7 @@
     "@cycle/isolate": "^1.4.0",
     "@cycle/rx-run": "^7.0.1",
     "babylonjs": "^2.4.0",
+    "lodash": "^3.10.1",
     "rx": "^4.1.0",
     "stampit": "^2.1.2",
     "xstream": "^5.3.4"
