@@ -3,9 +3,9 @@
 
 // Common bundle dependencies
 import BABYLON from 'babylonjs/babylon';
-import Rx from 'rx-lite';
+import Rx from 'rx';
 import { stampit } from 'stampit';
-import { run } from "@cycle/core";
 import { makeDOMDriver } from "@cycle/dom";
 import { makeHTTPDriver } from "@cycle/http";
 import { isolate } from "@cycle/isolate";
+import { run } from "@cycle/rx-run";

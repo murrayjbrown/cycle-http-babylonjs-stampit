@@ -7,7 +7,7 @@
 #app > .game {
   width: 80%;
   margin: auto;
-  margin-top: 6em;
+  margin-top: 3em;
   text-align: center;
 }
 #app > .game > canvas {

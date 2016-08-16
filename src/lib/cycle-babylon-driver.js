@@ -6,21 +6,16 @@
 // effects module in response to DOM input effects.
 //
 import { Observable } from 'rx';
-import { BabylonPlatFactory } from 'babscape';
 
 /**
  * Make Babylon game engine effects driver for Cycle.js
- * @param {string} canvas - canvas element
- * @param {function} createScene - scene definition
+ * @param {string} sceneDriver - Babylon Scene driver
  * @return {function} - game engine effects driver
  */
-export function makeGameDriver(canvas, createScene) {
-  // const engine = new BABYLON.Engine(canvas, true);
-  // const scene = createScene(engine);
+export function makeGameDriver(sceneDriver) {
 
-  const plat = BabylonPlatFactory(canvas);
-  const scene = plat.setup();
-  const engine = plat.getEngine();
+  const scene = sceneDriver.setup();
+  const engine = sceneDriver.getEngine();
 
   /**
    * Babylon game engine effects driver for Cycle.js

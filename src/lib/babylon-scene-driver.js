@@ -1,11 +1,11 @@
-/** @module babscape */
+/** @module babylon-scene-driver */
 /* Copyright (c) 2016 Murray J Brown; All rights reserved. */
 //
-// This module implements the BabylonPlatFactory.
-// A BabylonPlat is a Babylon game engine driver
+// This module implements the BabylonSceneDriverFactory.
+// A BabylonSceneDriver is a Babylon game engine driver
 // composed from stamps-based building blocks to
 // define cameras, lights, shapes, etc. used by
-// its underlying game engine driver.
+// the underlying game engine driver.
 //
 import stampit from 'stampit';
 import {Cloneable, SelfAware} from 'common-stamps';
@@ -159,8 +159,8 @@ const BabylonGrounds = stampit
   });
 
 
-// Factory to compose Babylon-based Plat stamps in proper order
-export const BabylonPlatFactory = (canvasElement) => {
+// Factory to compose stamps-based Babylon Scene Driver
+export const babylonSceneDriverFactory = (canvasElement) => {
 
   const BabylonDriver = stampit
     .methods({
@@ -189,12 +189,12 @@ export const BabylonPlatFactory = (canvasElement) => {
       this.checkDriver = () => {
         const canvas = this.getCanvas();
         if ( !canvas ) {
-          console.log("BablyonDriver: canvas not initialized.");
+          console.log("BablyonSceneDriver: canvas not initialized.");
           return null;
         }
         const scene = this.getScene();
         if ( !scene ) {
-          console.log("BablyonDriver: scene not initialized.");
+          console.log("BablyonSceneDriver: scene not initialized.");
           return null;
         }
       };
@@ -209,7 +209,7 @@ export const BabylonPlatFactory = (canvasElement) => {
       };
     });
 
-  const BabylonPlat = stampit
+  const BabylonSceneDriver = stampit
     .refs({
       canvas: canvasElement
     })
@@ -222,7 +222,7 @@ export const BabylonPlatFactory = (canvasElement) => {
       BabylonShapes,
       BabylonGrounds
     );
-  const babylonPlat = BabylonPlat();
+  const babylonSceneDriver = BabylonSceneDriver();
 
-  return babylonPlat;
+  return babylonSceneDriver;
 };

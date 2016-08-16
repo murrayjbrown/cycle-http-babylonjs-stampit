@@ -20,7 +20,7 @@ import {a, button, div, hr, h2, h4, input, label, p, span} from "@cycle/dom";
 export default function view(states, components) {
 
   function bgColourButton(bgColour) {
-    return [ button('.colour-game-background', 'Generate random background colour') ];
+    return button('.colour-game-background', 'Generate random background colour');
   }
 
   function formError(msg) {
@@ -32,14 +32,14 @@ export default function view(states, components) {
   }
 
   function queryForm(user) {
-    return [ hr(),
+    return div(".query-form", [ hr(),
       h4('Query user information from test server'),
       label('Number: '),
       input('.input-user-id', {style: 'text'}),
       button('.button-get-user-info', 'Get user info'),
       formError(user.error),
       hr()
-    ];
+    ]);
   }
 
   function queryResult(info) {
@@ -67,7 +67,7 @@ export default function view(states, components) {
           ])
         ]);
       }
-      result = div(".result", [
+      result = div(".query-result", [
         infoQuery,
         infoError,
         userDetails

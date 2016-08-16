@@ -8,11 +8,11 @@
 //
 
 import Rx from "rx";
+import { babylonSceneDriverFactory } from 'babylon-scene-driver.js';
 import { makeDOMDriver } from "@cycle/dom";
 import { makeHTTPDriver } from "@cycle/http";
-import { run as runCycle } from "@cycle/core";
+import { run as runCycle } from "@cycle/rx-run";
 import { makeGameDriver } from 'cycle-babylon-driver.js';
-import { createScene } from 'scene.js';
 import main from "main.js";
 
 export function app() {
@@ -36,10 +36,13 @@ export function app() {
   const gameCanvasElement = document.getElementById("app")
     .getElementsByClassName("gameCanvas").item(0);
 
+  // create scene driver for Babylon game engine
+  const sceneDriver = babylonSceneDriverFactory(gameCanvasElement);
+
   // Cycle effects drivers
   const drivers = {
     DOM: makeDOMDriver(appVdomElement),
-    GAME: makeGameDriver(gameCanvasElement, createScene),
+    GAME: makeGameDriver(sceneDriver),
     HTTP: makeHTTPDriver()
   };
 
