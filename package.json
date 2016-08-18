@@ -7,8 +7,13 @@
   "copyright": "Copyright (c) 2016 Murray J Brown; All rights reserved.",
   "version" : "0.1.0",
   "license": "MIT",
+  "private": true,
+  "publishConfig": {
+    "access": "restricted",
+    "registry": "http://npm.mjbrown.com/",
+    "scope": "@mjbrown"
+  },
   "repository": {
-    "private": false,
     "type": "git",
     "url": "git@github.com:murrayjbrown/cycle-http-babylonjs-stampit.git"
   },
