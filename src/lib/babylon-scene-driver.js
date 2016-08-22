@@ -164,6 +164,13 @@ export const babylonSceneDriverFactory = (canvasElement) => {
 
   const BabylonDriver = stampit
     .methods({
+      runRenderLoop() {
+        const engine = this.getEngine();
+        const scene = this.getScene();
+        engine.runRenderLoop(() => {
+          scene.render();
+        });
+      },
       setup() {
         // setup scene in proper order of composition
         if ( this.setupCameras ) {

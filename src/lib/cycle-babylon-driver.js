@@ -15,7 +15,6 @@ import { Observable } from 'rx';
 export function makeGameDriver(sceneDriver) {
 
   const scene = sceneDriver.setup();
-  const engine = sceneDriver.getEngine();
 
   /**
    * Babylon game engine effects driver for Cycle.js
@@ -36,9 +35,7 @@ export function makeGameDriver(sceneDriver) {
       console.log("gameDriver: completed.");
     });
     // render scene
-    engine.runRenderLoop(() => {
-      scene.render();
-    });
+    sceneDriver.runRenderLoop();
     // return scene$ stream
     return Observable.just(scene);
   };
